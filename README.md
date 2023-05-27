@@ -10,7 +10,7 @@
 ##### Proyecto IE0217 (Propuesta)
 Project in C++. Information systems will be developed where the use of classes and objects will simplify their implementation. Qt will be used, which is a multiplatform framework for software development in C++.
 
-This project consists of the creation of a desktop program developed in C++. It is a timetable MANAGER for a specific school of the University of Costa Rica. Being a timetable manager it includes information about the curriculum of that school, teachers and classrooms. 
+This project consists of the creation of a desktop program developed in C++. It is a timetable guide MANAGER for a specific school of the University of Costa Rica. Being a timetable guide manager it includes information about the courses of that school, teachers and classrooms. 
 
 > At first glance it looks like it is just as easy as using excel, and it is true. It does not add utility to a real problem. But the goal is to exercise the use of classes and objects, plus it is not limited to lines (as in excel), it also creates objects as such that can be edited and reused in a more user friendly way.
 
