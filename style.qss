@@ -1,0 +1,33 @@
+* { /* Este es un selector universal que selecciona todos los widgets. */
+    /* Los colores se definen en formato RGB. */
+    /* Cada número puede ir de 0 a 255. */
+}
+
+.grey_Jams {
+    background-color: rgb(70, 70, 70); /* Un gris oscuro. */
+}
+
+.grey2_Jams {
+    background-color: rgb(120, 120, 120); /* Un gris más claro. */
+}
+
+.Purple_Jams {
+    background-color: rgb(128, 0, 128); /* Morado intenso. */
+}
+
+.NavyBlue_Jams {
+    background-color: rgb(0, 0, 128); /* Azul marino. */
+}
+
+.Orange_Jams {
+    background-color: rgb(255, 165, 0); /* Naranja tirando a amarillo oscuro. */
+}
+
+.Green_Jams {
+    background-color: rgb(0, 128, 0); /* Verde intenso. */
+}
+
+.Red_Jams {
+    background-color: rgb(139, 0, 0); /* Rojo intenso pero un poco oscuro. */
+}
+
