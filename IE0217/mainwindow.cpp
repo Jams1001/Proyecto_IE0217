@@ -14,13 +14,18 @@ MainWindow::MainWindow(QWidget *parent)
     QString style(styleFile.readAll());
     this->setStyleSheet(style);
 
-    semesters_window *semestersWindow = new semesters_window(this);
-    connect(ui->pb_Semesters, &QPushButton::clicked, [=]() {
-        semestersWindow->show();
-    });
+    semestersWindow = new semesters_window(this); // Inicializamos semestersWindow
+
+    // Conectamos la señal clicked() del botón pb_Semesters a la ranura showSemestersWindow
+    connect(ui->pb_Semesters, &QPushButton::clicked, this, &MainWindow::showSemestersWindow);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+// Implementamos la ranura showSemestersWindow
+void MainWindow::showSemestersWindow() {
+    semestersWindow->show(); // Mostramos semestersWindow
 }
