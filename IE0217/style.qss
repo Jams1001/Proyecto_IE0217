@@ -1,4 +1,0 @@
-/* Establece el color de fondo del widget principal a un gris oscuro. */
-MainWindow {
-    background-color: rgb(70, 70, 70); /* grey_Jams */
-}
