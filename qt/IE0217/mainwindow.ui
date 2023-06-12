@@ -31,39 +31,42 @@
       <height>511</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>781</width>
+      <height>511</height>
+     </size>
+    </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="Home">
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>211</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Umpush</family>
-        <pointsize>10</pointsize>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Universidad de Costa Rica</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
+        <x>30</x>
         <y>90</y>
         <width>211</width>
         <height>51</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>211</width>
+        <height>51</height>
+       </size>
       </property>
       <property name="font">
        <font>
@@ -77,121 +80,262 @@
        <string>Escuela de Ingeniería Eléctrica</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonSemesters">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>260</y>
-        <width>161</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Semesters</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButtonCourses">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>260</y>
-        <width>161</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Courses</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButtonSchedule_Generator">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>380</y>
+        <x>540</x>
+        <y>350</y>
         <width>161</width>
         <height>51</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>161</width>
+        <height>51</height>
+       </size>
       </property>
       <property name="text">
        <string>Schedule Generator</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonClassrooms">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>320</y>
-        <width>161</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Classrooms</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButtonCurrent_Schedule">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>200</y>
+        <x>30</x>
+        <y>190</y>
         <width>161</width>
         <height>51</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>161</width>
+        <height>51</height>
+       </size>
       </property>
       <property name="text">
        <string>Current Schedule</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonTeachers">
+     <widget class="QPushButton" name="pushButtonClassrooms">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>80</y>
+        <x>540</x>
+        <y>290</y>
         <width>161</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>161</width>
+        <height>51</height>
+       </size>
+      </property>
       <property name="text">
-       <string>Teachers</string>
+       <string>Classrooms</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonExternal_Courses">
+     <widget class="QPushButton" name="pushButtonSemesters">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>140</y>
+        <x>30</x>
+        <y>250</y>
         <width>161</width>
         <height>51</height>
        </rect>
       </property>
-      <property name="text">
-       <string>External Courses</string>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
-     </widget>
-     <widget class="QPushButton" name="pushButtonCycles">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>200</y>
+      <property name="maximumSize">
+       <size>
         <width>161</width>
         <height>51</height>
-       </rect>
+       </size>
       </property>
       <property name="text">
-       <string>Cycles</string>
+       <string>Semesters</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_Home">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>30</x>
         <y>10</y>
         <width>89</width>
         <height>25</height>
        </rect>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>89</width>
+        <height>25</height>
+       </size>
+      </property>
       <property name="text">
        <string>Home</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonCycles">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>170</y>
+        <width>161</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>161</width>
+        <height>51</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Cycles</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>50</y>
+        <width>211</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>211</width>
+        <height>41</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Umpush</family>
+        <pointsize>10</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Universidad de Costa Rica</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonCourses">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>230</y>
+        <width>161</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>161</width>
+        <height>51</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Courses</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonExternal_Courses">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>110</y>
+        <width>161</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>161</width>
+        <height>51</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>External Courses</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonTeachers">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>50</y>
+        <width>161</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>161</width>
+        <height>51</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Teachers</string>
       </property>
      </widget>
     </widget>
@@ -247,6 +391,29 @@
       <property name="text">
        <string>Semesters</string>
       </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>761</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>759</width>
+         <height>379</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="Teachers">

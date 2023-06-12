@@ -11,10 +11,12 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -27,22 +29,24 @@ public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
     QWidget *Home;
-    QLabel *label;
-    QLabel *label_2;
-    QPushButton *pushButtonSemesters;
-    QPushButton *pushButtonCourses;
+    QLabel *label_10;
     QPushButton *pushButtonSchedule_Generator;
-    QPushButton *pushButtonClassrooms;
     QPushButton *pushButtonCurrent_Schedule;
-    QPushButton *pushButtonTeachers;
-    QPushButton *pushButtonExternal_Courses;
-    QPushButton *pushButtonCycles;
+    QPushButton *pushButtonClassrooms;
+    QPushButton *pushButtonSemesters;
     QPushButton *pushButton_Home;
+    QPushButton *pushButtonCycles;
+    QLabel *label_9;
+    QPushButton *pushButtonCourses;
+    QPushButton *pushButtonExternal_Courses;
+    QPushButton *pushButtonTeachers;
     QWidget *Semesters;
     QPushButton *pushButtonAdd_Semesters;
     QPushButton *pushButtonSelectSemesters;
     QPushButton *pushButton_HomeS;
     QPushButton *pushButton_Semesters;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
     QWidget *Teachers;
     QPushButton *pushButtonSelect_Teachers;
     QPushButton *pushButtonAdd_Teachers;
@@ -68,6 +72,8 @@ public:
     QPushButton *pushButtonAdd_Classrooms;
     QPushButton *pushButton_HomeCl;
     QPushButton *pushButton_Cl;
+    QWidget *Home_f;
+    QGridLayout *gridLayout_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -87,43 +93,82 @@ public:
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
         stackedWidget->setGeometry(QRect(0, 0, 781, 511));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(stackedWidget->sizePolicy().hasHeightForWidth());
+        stackedWidget->setSizePolicy(sizePolicy);
+        stackedWidget->setMaximumSize(QSize(781, 511));
         Home = new QWidget();
         Home->setObjectName(QString::fromUtf8("Home"));
-        label = new QLabel(Home);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(20, 70, 211, 41));
-        label->setFont(font);
-        label_2 = new QLabel(Home);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(20, 90, 211, 51));
-        label_2->setFont(font);
-        pushButtonSemesters = new QPushButton(Home);
-        pushButtonSemesters->setObjectName(QString::fromUtf8("pushButtonSemesters"));
-        pushButtonSemesters->setGeometry(QRect(20, 260, 161, 51));
-        pushButtonCourses = new QPushButton(Home);
-        pushButtonCourses->setObjectName(QString::fromUtf8("pushButtonCourses"));
-        pushButtonCourses->setGeometry(QRect(580, 260, 161, 51));
+        label_10 = new QLabel(Home);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setGeometry(QRect(30, 90, 211, 51));
+        sizePolicy.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
+        label_10->setSizePolicy(sizePolicy);
+        label_10->setMaximumSize(QSize(211, 51));
+        label_10->setFont(font);
         pushButtonSchedule_Generator = new QPushButton(Home);
         pushButtonSchedule_Generator->setObjectName(QString::fromUtf8("pushButtonSchedule_Generator"));
-        pushButtonSchedule_Generator->setGeometry(QRect(580, 380, 161, 51));
-        pushButtonClassrooms = new QPushButton(Home);
-        pushButtonClassrooms->setObjectName(QString::fromUtf8("pushButtonClassrooms"));
-        pushButtonClassrooms->setGeometry(QRect(580, 320, 161, 51));
+        pushButtonSchedule_Generator->setGeometry(QRect(540, 350, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonSchedule_Generator->sizePolicy().hasHeightForWidth());
+        pushButtonSchedule_Generator->setSizePolicy(sizePolicy);
+        pushButtonSchedule_Generator->setMaximumSize(QSize(161, 51));
         pushButtonCurrent_Schedule = new QPushButton(Home);
         pushButtonCurrent_Schedule->setObjectName(QString::fromUtf8("pushButtonCurrent_Schedule"));
-        pushButtonCurrent_Schedule->setGeometry(QRect(20, 200, 161, 51));
-        pushButtonTeachers = new QPushButton(Home);
-        pushButtonTeachers->setObjectName(QString::fromUtf8("pushButtonTeachers"));
-        pushButtonTeachers->setGeometry(QRect(580, 80, 161, 51));
-        pushButtonExternal_Courses = new QPushButton(Home);
-        pushButtonExternal_Courses->setObjectName(QString::fromUtf8("pushButtonExternal_Courses"));
-        pushButtonExternal_Courses->setGeometry(QRect(580, 140, 161, 51));
-        pushButtonCycles = new QPushButton(Home);
-        pushButtonCycles->setObjectName(QString::fromUtf8("pushButtonCycles"));
-        pushButtonCycles->setGeometry(QRect(580, 200, 161, 51));
+        pushButtonCurrent_Schedule->setGeometry(QRect(30, 190, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonCurrent_Schedule->sizePolicy().hasHeightForWidth());
+        pushButtonCurrent_Schedule->setSizePolicy(sizePolicy);
+        pushButtonCurrent_Schedule->setMaximumSize(QSize(161, 51));
+        pushButtonClassrooms = new QPushButton(Home);
+        pushButtonClassrooms->setObjectName(QString::fromUtf8("pushButtonClassrooms"));
+        pushButtonClassrooms->setGeometry(QRect(540, 290, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonClassrooms->sizePolicy().hasHeightForWidth());
+        pushButtonClassrooms->setSizePolicy(sizePolicy);
+        pushButtonClassrooms->setMaximumSize(QSize(161, 51));
+        pushButtonSemesters = new QPushButton(Home);
+        pushButtonSemesters->setObjectName(QString::fromUtf8("pushButtonSemesters"));
+        pushButtonSemesters->setGeometry(QRect(30, 250, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonSemesters->sizePolicy().hasHeightForWidth());
+        pushButtonSemesters->setSizePolicy(sizePolicy);
+        pushButtonSemesters->setMaximumSize(QSize(161, 51));
         pushButton_Home = new QPushButton(Home);
         pushButton_Home->setObjectName(QString::fromUtf8("pushButton_Home"));
-        pushButton_Home->setGeometry(QRect(20, 10, 89, 25));
+        pushButton_Home->setGeometry(QRect(30, 10, 89, 25));
+        sizePolicy.setHeightForWidth(pushButton_Home->sizePolicy().hasHeightForWidth());
+        pushButton_Home->setSizePolicy(sizePolicy);
+        pushButton_Home->setMaximumSize(QSize(89, 25));
+        pushButtonCycles = new QPushButton(Home);
+        pushButtonCycles->setObjectName(QString::fromUtf8("pushButtonCycles"));
+        pushButtonCycles->setGeometry(QRect(540, 170, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonCycles->sizePolicy().hasHeightForWidth());
+        pushButtonCycles->setSizePolicy(sizePolicy);
+        pushButtonCycles->setMaximumSize(QSize(161, 51));
+        label_9 = new QLabel(Home);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setGeometry(QRect(30, 50, 211, 41));
+        sizePolicy.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
+        label_9->setSizePolicy(sizePolicy);
+        label_9->setMaximumSize(QSize(211, 41));
+        label_9->setFont(font);
+        pushButtonCourses = new QPushButton(Home);
+        pushButtonCourses->setObjectName(QString::fromUtf8("pushButtonCourses"));
+        pushButtonCourses->setGeometry(QRect(540, 230, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonCourses->sizePolicy().hasHeightForWidth());
+        pushButtonCourses->setSizePolicy(sizePolicy);
+        pushButtonCourses->setMaximumSize(QSize(161, 51));
+        pushButtonExternal_Courses = new QPushButton(Home);
+        pushButtonExternal_Courses->setObjectName(QString::fromUtf8("pushButtonExternal_Courses"));
+        pushButtonExternal_Courses->setGeometry(QRect(540, 110, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonExternal_Courses->sizePolicy().hasHeightForWidth());
+        pushButtonExternal_Courses->setSizePolicy(sizePolicy);
+        pushButtonExternal_Courses->setMaximumSize(QSize(161, 51));
+        pushButtonTeachers = new QPushButton(Home);
+        pushButtonTeachers->setObjectName(QString::fromUtf8("pushButtonTeachers"));
+        pushButtonTeachers->setGeometry(QRect(540, 50, 161, 51));
+        sizePolicy.setHeightForWidth(pushButtonTeachers->sizePolicy().hasHeightForWidth());
+        pushButtonTeachers->setSizePolicy(sizePolicy);
+        pushButtonTeachers->setMaximumSize(QSize(161, 51));
         stackedWidget->addWidget(Home);
         Semesters = new QWidget();
         Semesters->setObjectName(QString::fromUtf8("Semesters"));
@@ -139,6 +184,14 @@ public:
         pushButton_Semesters = new QPushButton(Semesters);
         pushButton_Semesters->setObjectName(QString::fromUtf8("pushButton_Semesters"));
         pushButton_Semesters->setGeometry(QRect(110, 10, 89, 25));
+        scrollArea = new QScrollArea(Semesters);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setGeometry(QRect(10, 50, 761, 381));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 759, 379));
+        scrollArea->setWidget(scrollAreaWidgetContents);
         stackedWidget->addWidget(Semesters);
         Teachers = new QWidget();
         Teachers->setObjectName(QString::fromUtf8("Teachers"));
@@ -215,6 +268,11 @@ public:
         pushButton_Cl->setObjectName(QString::fromUtf8("pushButton_Cl"));
         pushButton_Cl->setGeometry(QRect(20, 10, 89, 25));
         stackedWidget->addWidget(Classrooms);
+        Home_f = new QWidget();
+        Home_f->setObjectName(QString::fromUtf8("Home_f"));
+        gridLayout_2 = new QGridLayout(Home_f);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        stackedWidget->addWidget(Home_f);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -235,17 +293,17 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        label->setText(QApplication::translate("MainWindow", "Universidad de Costa Rica", nullptr));
-        label_2->setText(QApplication::translate("MainWindow", "Escuela de Ingenier\303\255a El\303\251ctrica", nullptr));
-        pushButtonSemesters->setText(QApplication::translate("MainWindow", "Semesters", nullptr));
-        pushButtonCourses->setText(QApplication::translate("MainWindow", "Courses", nullptr));
+        label_10->setText(QApplication::translate("MainWindow", "Escuela de Ingenier\303\255a El\303\251ctrica", nullptr));
         pushButtonSchedule_Generator->setText(QApplication::translate("MainWindow", "Schedule Generator", nullptr));
-        pushButtonClassrooms->setText(QApplication::translate("MainWindow", "Classrooms", nullptr));
         pushButtonCurrent_Schedule->setText(QApplication::translate("MainWindow", "Current Schedule", nullptr));
-        pushButtonTeachers->setText(QApplication::translate("MainWindow", "Teachers", nullptr));
-        pushButtonExternal_Courses->setText(QApplication::translate("MainWindow", "External Courses", nullptr));
-        pushButtonCycles->setText(QApplication::translate("MainWindow", "Cycles", nullptr));
+        pushButtonClassrooms->setText(QApplication::translate("MainWindow", "Classrooms", nullptr));
+        pushButtonSemesters->setText(QApplication::translate("MainWindow", "Semesters", nullptr));
         pushButton_Home->setText(QApplication::translate("MainWindow", "Home", nullptr));
+        pushButtonCycles->setText(QApplication::translate("MainWindow", "Cycles", nullptr));
+        label_9->setText(QApplication::translate("MainWindow", "Universidad de Costa Rica", nullptr));
+        pushButtonCourses->setText(QApplication::translate("MainWindow", "Courses", nullptr));
+        pushButtonExternal_Courses->setText(QApplication::translate("MainWindow", "External Courses", nullptr));
+        pushButtonTeachers->setText(QApplication::translate("MainWindow", "Teachers", nullptr));
         pushButtonAdd_Semesters->setText(QApplication::translate("MainWindow", "Add", nullptr));
         pushButtonSelectSemesters->setText(QApplication::translate("MainWindow", "Select", nullptr));
         pushButton_HomeS->setText(QApplication::translate("MainWindow", "Home", nullptr));
