@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QVBoxLayout>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -33,5 +34,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QLayout *layout1;
 };
 #endif // MAINWINDOW_H

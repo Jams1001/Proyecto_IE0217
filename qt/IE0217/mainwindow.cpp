@@ -1,13 +1,15 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "dialog_wb.h"
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QVBoxLayout *layout1 = new QVBoxLayout;
+    layout1 = new QVBoxLayout;
     ui->scrollAreaWidgetContents->setLayout(layout1);
     QVBoxLayout *layout2 = new QVBoxLayout;
     ui->Semesters->setLayout(layout2);
@@ -34,13 +36,28 @@ void MainWindow::on_pushButton_Cl_clicked(){ui->stackedWidget->setCurrentIndex(0
 
 void MainWindow::addNewButton()
 {
-    QPushButton *newButton = new QPushButton(this);
-    newButton->setText("Semester 1");
+    dialog_wb dialog(this); // Crea una instancia de tu cuadro de diálogo personalizado
+    if (dialog.exec() == QDialog::Accepted) { // Muestra el cuadro de diálogo y verifica si el usuario hizo clic en "Agregar"
+        QString buttonName = dialog.getButtonName(); // Obtiene el nombre del botón ingresado por el usuario
 
-    QLayout *layout = ui->scrollAreaWidgetContents->layout();
-    if (layout) {
-        layout->addWidget(newButton);
+        // Verifica si ya existe un botón con ese nombre
+        bool exists = false;
+        for (int i = 0; i < layout1->count(); ++i) {
+            QPushButton *button = qobject_cast<QPushButton*>(layout1->itemAt(i)->widget());
+            if (button && button->text() == buttonName) {
+                exists = true;
+                break;
+            }
+        }
+
+        if (exists) {
+            // Muestra un mensaje de error si el botón ya existe
+            QMessageBox::warning(this, "Error:", "This element already exists.");
+        } else {
+            // Crea y agrega un nuevo botón
+            QPushButton *newButton = new QPushButton(this);
+            newButton->setText(buttonName);
+            layout1->addWidget(newButton);
+        }
     }
-
-    this->update();
 }

@@ -4,3 +4,7 @@
 /home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/IE0217/main.cpp
 /home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/IE0217/mainwindow.cpp
  uic:./ui_mainwindow.h
+/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/IE0217/dialog_wb.h
+ mmc:Q_OBJECT
+/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/IE0217/dialog_wb.cpp
+ uic:ui_dialog_wb.h

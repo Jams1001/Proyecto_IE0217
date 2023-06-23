@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -72,8 +71,6 @@ public:
     QPushButton *pushButtonAdd_Classrooms;
     QPushButton *pushButton_HomeCl;
     QPushButton *pushButton_Cl;
-    QWidget *Home_f;
-    QGridLayout *gridLayout_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -268,11 +265,6 @@ public:
         pushButton_Cl->setObjectName(QString::fromUtf8("pushButton_Cl"));
         pushButton_Cl->setGeometry(QRect(20, 10, 89, 25));
         stackedWidget->addWidget(Classrooms);
-        Home_f = new QWidget();
-        Home_f->setObjectName(QString::fromUtf8("Home_f"));
-        gridLayout_2 = new QGridLayout(Home_f);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        stackedWidget->addWidget(Home_f);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -284,7 +276,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
