@@ -31,9 +31,15 @@ private slots:
     void on_pushButton_Cl_clicked();
 
     void addNewButton();
+    void enterSelectionMode();
+    void exitSelectionMode();
+    void removeSelectedButtons();
+    void duplicateSelectedButtons();
+    void buttonClicked();
 
 private:
     Ui::MainWindow *ui;
     QLayout *layout1;
+    bool isSelectionMode;
 };
 #endif // MAINWINDOW_H

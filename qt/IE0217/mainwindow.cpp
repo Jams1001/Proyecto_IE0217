@@ -7,6 +7,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , isSelectionMode(false)
 {
     ui->setupUi(this);
     layout1 = new QVBoxLayout;
@@ -14,6 +15,17 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *layout2 = new QVBoxLayout;
     ui->Semesters->setLayout(layout2);
     connect(ui->pushButtonAdd_Semesters, &QPushButton::clicked, this, &MainWindow::addNewButton);
+
+    // Oculta los botones "Unselect", "Remove" y "Duplicate" al inicio
+    ui->pushButtonUnselect_Semesters->hide();
+    ui->pushButtonRemove_Semesters->hide();
+    ui->pushButtonDuplicate_Semesters->hide();
+
+    connect(ui->pushButtonSelect_Semesters, &QPushButton::clicked, this, &MainWindow::enterSelectionMode);
+    connect(ui->pushButtonUnselect_Semesters, &QPushButton::clicked, this, &MainWindow::exitSelectionMode);
+    connect(ui->pushButtonRemove_Semesters, &QPushButton::clicked, this, &MainWindow::removeSelectedButtons);
+    connect(ui->pushButtonDuplicate_Semesters, &QPushButton::clicked, this, &MainWindow::duplicateSelectedButtons);
+
 }
 
 MainWindow::~MainWindow()
@@ -57,7 +69,101 @@ void MainWindow::addNewButton()
             // Crea y agrega un nuevo botón
             QPushButton *newButton = new QPushButton(this);
             newButton->setText(buttonName);
+            connect(newButton, &QPushButton::clicked, this, &MainWindow::buttonClicked);
             layout1->addWidget(newButton);
         }
+    }
+}
+
+
+void MainWindow::enterSelectionMode()
+{
+    isSelectionMode = true;
+    ui->pushButtonAdd_Semesters->hide();
+    ui->pushButtonSelect_Semesters->hide();
+    ui->pushButtonUnselect_Semesters->show();
+    ui->pushButtonDuplicate_Semesters->show();
+    ui->pushButtonRemove_Semesters->show();
+}
+
+void MainWindow::exitSelectionMode()
+{
+    isSelectionMode = false;
+    ui->pushButtonAdd_Semesters->show();
+    ui->pushButtonSelect_Semesters->show();
+    ui->pushButtonUnselect_Semesters->hide();
+    ui->pushButtonDuplicate_Semesters->hide();
+    ui->pushButtonRemove_Semesters->hide();
+}
+
+void MainWindow::removeSelectedButtons()
+{
+    // Itera en reversa para no alterar el índice de los elementos restantes al eliminar
+    for (int i = layout1->count() - 1; i >= 0; --i) {
+        QPushButton *button = qobject_cast<QPushButton*>(layout1->itemAt(i)->widget());
+        if (button && button->property("isSelected").toBool()) {
+            // Remueve el botón del layout y lo elimina
+            layout1->removeWidget(button);
+            delete button;
+        }
+    }
+}
+
+
+void MainWindow::duplicateSelectedButtons()
+{
+    // Aquí podrías iterar sobre los botones en el área de desplazamiento
+    // y duplicar los que están seleccionados.
+    for (int i = 0; i < layout1->count(); ++i) {
+        QPushButton *button = qobject_cast<QPushButton*>(layout1->itemAt(i)->widget());
+        if (button && button->property("isSelected").toBool()) {
+            QString originalName = button->text();
+            QString newName = originalName;
+            int duplicateCount = 1;
+
+            // Verifica si ya existe un botón con ese nombre y ajusta el nombre del duplicado
+            bool nameExists;
+            do {
+                nameExists = false;
+                for (int j = 0; j < layout1->count(); ++j) {
+                    QPushButton *otherButton = qobject_cast<QPushButton*>(layout1->itemAt(j)->widget());
+                    if (otherButton && otherButton->text() == newName) {
+                        nameExists = true;
+                        newName = QString("%1 (%2)").arg(originalName).arg(duplicateCount++);
+                        break;
+                    }
+                }
+            } while (nameExists);
+
+            // Crea y agrega un nuevo botón con el nombre ajustado
+            QPushButton *newButton = new QPushButton(this);
+            newButton->setText(newName);
+
+            // Conecta la señal 'clicked' del nuevo botón a la ranura 'buttonClicked'
+            connect(newButton, &QPushButton::clicked, this, &MainWindow::buttonClicked);
+
+            layout1->addWidget(newButton);
+        }
+    }
+}
+
+
+
+void MainWindow::buttonClicked()
+{
+    if (!isSelectionMode) return; // Si no estamos en modo de selección, no hacemos nada
+
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    if (!button) return;
+
+    // Cambia el estado de selección del botón
+    bool isSelected = button->property("isSelected").toBool();
+    button->setProperty("isSelected", !isSelected);
+
+    // Cambia el aspecto del botón para indicar si está seleccionado
+    if (!isSelected) {
+        button->setStyleSheet("background-color: #a0a0a0");
+    } else {
+        button->setStyleSheet("");
     }
 }

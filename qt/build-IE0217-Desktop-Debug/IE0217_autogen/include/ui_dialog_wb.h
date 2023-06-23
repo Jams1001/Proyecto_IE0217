@@ -30,12 +30,12 @@ public:
         dialog_wb->resize(400, 300);
         buttonBox = new QDialogButtonBox(dialog_wb);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(30, 240, 341, 32));
+        buttonBox->setGeometry(QRect(120, 160, 171, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         lineEdit = new QLineEdit(dialog_wb);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(70, 50, 291, 101));
+        lineEdit->setGeometry(QRect(60, 100, 291, 41));
 
         retranslateUi(dialog_wb);
         QObject::connect(buttonBox, SIGNAL(accepted()), dialog_wb, SLOT(accept()));

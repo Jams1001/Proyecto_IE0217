@@ -44,7 +44,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Home">
      <widget class="QLabel" name="label_10">
@@ -81,11 +81,14 @@
       </property>
      </widget>
      <widget class="QPushButton" name="pushButtonSchedule_Generator">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>540</x>
-        <y>350</y>
-        <width>161</width>
+        <x>530</x>
+        <y>360</y>
+        <width>180</width>
         <height>51</height>
        </rect>
       </property>
@@ -97,12 +100,12 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>161</width>
+        <width>200</width>
         <height>51</height>
        </size>
       </property>
       <property name="text">
-       <string>Schedule Generator</string>
+       <string>Schedule Generator (Soon)</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButtonCurrent_Schedule">
@@ -353,7 +356,7 @@
        <string>Add</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonSelectSemesters">
+     <widget class="QPushButton" name="pushButtonSelect_Semesters">
       <property name="geometry">
        <rect>
         <x>640</x>
@@ -414,6 +417,45 @@
         </rect>
        </property>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemove_Semesters">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDuplicate_Semesters">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Duplicate</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonUnselect_Semesters">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Unselect</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="Teachers">
