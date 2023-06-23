@@ -1,8 +1,0 @@
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/IE0217.dir
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/edit_cache.dir
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/rebuild_cache.dir
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/list_install_components.dir
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/install.dir
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/install/local.dir
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/install/strip.dir
-/home/jams/Jams/IS_2023/IE0217_Estructuras_abstractas/Proyecto_IE0217/qt/build-IE0217-Desktop-Debug/CMakeFiles/IE0217_autogen.dir
