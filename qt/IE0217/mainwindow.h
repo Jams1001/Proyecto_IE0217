@@ -28,7 +28,7 @@ private slots:
     void on_pushButton_HomeEC_clicked();
     void on_pushButton_HomeCy_clicked();
     void on_pushButton_HomeCo_clicked();
-    void on_pushButton_Cl_clicked();
+    void on_pushButton_HomeCl_clicked();
 
     void addNewButton();
     void enterSelectionMode();

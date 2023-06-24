@@ -48,7 +48,7 @@ void MainWindow::on_pushButtonClassrooms_clicked(){ui->stackedWidget->setCurrent
 void MainWindow::on_pushButton_HomeEC_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCy_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCo_clicked(){ui->stackedWidget->setCurrentIndex(0);}
-void MainWindow::on_pushButton_Cl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
+void MainWindow::on_pushButton_HomeCl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 
 void MainWindow::addNewButton()
 {
@@ -149,7 +149,6 @@ void MainWindow::duplicateSelectedButtons()
         }
     }
 }
-
 
 
 void MainWindow::buttonClicked()
