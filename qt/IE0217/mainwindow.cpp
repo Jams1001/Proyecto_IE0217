@@ -3,6 +3,9 @@
 #include "dialog_wb.h"
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QInputDialog>
+#include <QLineEdit>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButtonDuplicate_Semesters, &QPushButton::clicked, this, &MainWindow::duplicateSelectedButtons);
 
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -70,6 +74,7 @@ void MainWindow::addNewButton()
             QPushButton *newButton = new QPushButton(this);
             newButton->setText(buttonName);
             connect(newButton, &QPushButton::clicked, this, &MainWindow::buttonClicked);
+            newButton->installEventFilter(this); // Instala un filtro de eventos para detectar el doble clic
             layout1->addWidget(newButton);
         }
     }
@@ -112,8 +117,6 @@ void MainWindow::removeSelectedButtons()
 
 void MainWindow::duplicateSelectedButtons()
 {
-    // Aquí podrías iterar sobre los botones en el área de desplazamiento
-    // y duplicar los que están seleccionados.
     for (int i = 0; i < layout1->count(); ++i) {
         QPushButton *button = qobject_cast<QPushButton*>(layout1->itemAt(i)->widget());
         if (button && button->property("isSelected").toBool()) {
@@ -139,8 +142,8 @@ void MainWindow::duplicateSelectedButtons()
             QPushButton *newButton = new QPushButton(this);
             newButton->setText(newName);
 
-            // Conecta la señal 'clicked' del nuevo botón a la ranura 'buttonClicked'
             connect(newButton, &QPushButton::clicked, this, &MainWindow::buttonClicked);
+            newButton->installEventFilter(this);
 
             layout1->addWidget(newButton);
         }
@@ -162,8 +165,28 @@ void MainWindow::buttonClicked()
 
     // Cambia el aspecto del botón para indicar si está seleccionado
     if (!isSelected) {
-        button->setStyleSheet("background-color: #a0a0a0");
+        button->setStyleSheet("background-color: #7dff33 ");
     } else {
         button->setStyleSheet("");
     }
+}
+
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if (!isSelectionMode && event->type() == QEvent::MouseButtonDblClick) {
+        QPushButton *button = qobject_cast<QPushButton*>(watched);
+        if (button) {
+            // Si se hace click una vez por ahora ok
+            bool ok;
+            QString newName = QInputDialog::getText(this, tr("Edit Button Name"),
+                                                     tr("Button name:"), QLineEdit::Normal,
+                                                     button->text(), &ok);
+            if (ok && !newName.isEmpty()) {
+                button->setText(newName);
+            }
+            return true; // Indica que el evento fue manejado
+        }
+    }
+    return QMainWindow::eventFilter(watched, event); // Llama a la implementación base
 }

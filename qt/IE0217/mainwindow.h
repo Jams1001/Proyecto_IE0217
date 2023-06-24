@@ -37,6 +37,9 @@ private slots:
     void duplicateSelectedButtons();
     void buttonClicked();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
 private:
     Ui::MainWindow *ui;
     QLayout *layout1;
