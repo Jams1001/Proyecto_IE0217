@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     , isSelectionMode(false)
 {
     ui->setupUi(this);
-    layout1 = new QVBoxLayout;
-    ui->scrollAreaWidgetContents->setLayout(layout1);
+    layout_Semesters = new QVBoxLayout;
+    ui->scrollAreaWidget_Semesters->setLayout(layout_Semesters);
     QVBoxLayout *layout2 = new QVBoxLayout;
     ui->Semesters->setLayout(layout2);
     connect(ui->pushButtonAdd_Semesters, &QPushButton::clicked, this, &MainWindow::addNewButton);
@@ -41,14 +41,14 @@ void MainWindow::on_pushButtonSemesters_clicked(){ui->stackedWidget->setCurrentI
 void MainWindow::on_pushButtonTeachers_clicked(){ui->stackedWidget->setCurrentIndex(2);}
 void MainWindow::on_pushButton_HomeS_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeT_clicked(){ui->stackedWidget->setCurrentIndex(0);}
-void MainWindow::on_pushButtonExternal_Courses_clicked(){ui->stackedWidget->setCurrentIndex(3);}
+void MainWindow::on_pushButtonExternalCourses_clicked(){ui->stackedWidget->setCurrentIndex(3);}
 void MainWindow::on_pushButtonCycles_clicked(){ui->stackedWidget->setCurrentIndex(4);}
 void MainWindow::on_pushButtonCourses_clicked(){ui->stackedWidget->setCurrentIndex(5);}
 void MainWindow::on_pushButtonClassrooms_clicked(){ui->stackedWidget->setCurrentIndex(6);}
 void MainWindow::on_pushButton_HomeEC_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCy_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCo_clicked(){ui->stackedWidget->setCurrentIndex(0);}
-void MainWindow::on_pushButton_HomeCl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
+void MainWindow::on_pushButton_Cl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 
 void MainWindow::addNewButton()
 {
@@ -58,8 +58,8 @@ void MainWindow::addNewButton()
 
         // Verifica si ya existe un botón con ese nombre
         bool exists = false;
-        for (int i = 0; i < layout1->count(); ++i) {
-            QPushButton *button = qobject_cast<QPushButton*>(layout1->itemAt(i)->widget());
+        for (int i = 0; i < layout_Semesters->count(); ++i) {
+            QPushButton *button = qobject_cast<QPushButton*>(layout_Semesters->itemAt(i)->widget());
             if (button && button->text() == buttonName) {
                 exists = true;
                 break;
@@ -75,7 +75,7 @@ void MainWindow::addNewButton()
             newButton->setText(buttonName);
             connect(newButton, &QPushButton::clicked, this, &MainWindow::buttonClicked);
             newButton->installEventFilter(this); // Instala un filtro de eventos para detectar el doble clic
-            layout1->addWidget(newButton);
+            layout_Semesters->addWidget(newButton);
         }
     }
 }
@@ -104,11 +104,11 @@ void MainWindow::exitSelectionMode()
 void MainWindow::removeSelectedButtons()
 {
     // Itera en reversa para no alterar el índice de los elementos restantes al eliminar
-    for (int i = layout1->count() - 1; i >= 0; --i) {
-        QPushButton *button = qobject_cast<QPushButton*>(layout1->itemAt(i)->widget());
+    for (int i = layout_Semesters->count() - 1; i >= 0; --i) {
+        QPushButton *button = qobject_cast<QPushButton*>(layout_Semesters->itemAt(i)->widget());
         if (button && button->property("isSelected").toBool()) {
             // Remueve el botón del layout y lo elimina
-            layout1->removeWidget(button);
+            layout_Semesters->removeWidget(button);
             delete button;
         }
     }
@@ -117,8 +117,8 @@ void MainWindow::removeSelectedButtons()
 
 void MainWindow::duplicateSelectedButtons()
 {
-    for (int i = 0; i < layout1->count(); ++i) {
-        QPushButton *button = qobject_cast<QPushButton*>(layout1->itemAt(i)->widget());
+    for (int i = 0; i < layout_Semesters->count(); ++i) {
+        QPushButton *button = qobject_cast<QPushButton*>(layout_Semesters->itemAt(i)->widget());
         if (button && button->property("isSelected").toBool()) {
             QString originalName = button->text();
             QString newName = originalName;
@@ -128,8 +128,8 @@ void MainWindow::duplicateSelectedButtons()
             bool nameExists;
             do {
                 nameExists = false;
-                for (int j = 0; j < layout1->count(); ++j) {
-                    QPushButton *otherButton = qobject_cast<QPushButton*>(layout1->itemAt(j)->widget());
+                for (int j = 0; j < layout_Semesters->count(); ++j) {
+                    QPushButton *otherButton = qobject_cast<QPushButton*>(layout_Semesters->itemAt(j)->widget());
                     if (otherButton && otherButton->text() == newName) {
                         nameExists = true;
                         newName = QString("%1 (%2)").arg(originalName).arg(duplicateCount++);
@@ -145,10 +145,11 @@ void MainWindow::duplicateSelectedButtons()
             connect(newButton, &QPushButton::clicked, this, &MainWindow::buttonClicked);
             newButton->installEventFilter(this);
 
-            layout1->addWidget(newButton);
+            layout_Semesters->addWidget(newButton);
         }
     }
 }
+
 
 
 void MainWindow::buttonClicked()

@@ -21,14 +21,14 @@ private slots:
     void on_pushButtonTeachers_clicked();
     void on_pushButton_HomeS_clicked();
     void on_pushButton_HomeT_clicked();
-    void on_pushButtonExternal_Courses_clicked();
+    void on_pushButtonExternalCourses_clicked();
     void on_pushButtonCycles_clicked();
     void on_pushButtonCourses_clicked();
     void on_pushButtonClassrooms_clicked();
     void on_pushButton_HomeEC_clicked();
     void on_pushButton_HomeCy_clicked();
     void on_pushButton_HomeCo_clicked();
-    void on_pushButton_HomeCl_clicked();
+    void on_pushButton_Cl_clicked();
 
     void addNewButton();
     void enterSelectionMode();
@@ -42,7 +42,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    QLayout *layout1;
+    QLayout *layout_Semesters;
     bool isSelectionMode;
 };
 #endif // MAINWINDOW_H

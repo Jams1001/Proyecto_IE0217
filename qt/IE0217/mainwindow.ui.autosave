@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>787</width>
+    <width>792</width>
     <height>573</height>
    </rect>
   </property>
@@ -47,7 +47,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Home">
      <widget class="QLabel" name="label_10">
@@ -481,33 +481,10 @@ border-radius: 20px;</string>
        <string>Select</string>
       </property>
      </widget>
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>50</y>
-        <width>761</width>
-        <height>381</height>
-       </rect>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>759</width>
-         <height>379</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
      <widget class="QPushButton" name="pushButtonRemove_Semesters">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>450</y>
         <width>121</width>
         <height>41</height>
@@ -525,7 +502,7 @@ border-radius: 20px;</string>
      <widget class="QPushButton" name="pushButtonDuplicate_Semesters">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>160</x>
         <y>450</y>
         <width>121</width>
         <height>41</height>
@@ -543,7 +520,7 @@ border-radius: 20px;</string>
      <widget class="QPushButton" name="pushButtonUnselect_Semesters">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>310</x>
         <y>450</y>
         <width>121</width>
         <height>41</height>
@@ -661,6 +638,32 @@ border: none;</string>
          <string>/ Semesters</string>
         </property>
        </widget>
+      </widget>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea_Semesters">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>771</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidget_Semesters">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>769</width>
+         <height>379</height>
+        </rect>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -806,9 +809,89 @@ border: none;</string>
        </widget>
       </widget>
      </widget>
+     <widget class="QScrollArea" name="scrollArea_Teachers">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>771</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidget_Teachers">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>769</width>
+         <height>389</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButtonUnselect_Teachers">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Unselect</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemove_Teachers">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDuplicate_Teachers">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Duplicate</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="External_Courses">
-     <widget class="QPushButton" name="pushButtonAdd_External_Courses">
+     <widget class="QPushButton" name="pushButtonAdd_ExternalCourses">
       <property name="geometry">
        <rect>
         <x>490</x>
@@ -826,7 +909,7 @@ border-radius: 20px;</string>
        <string>Add</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonSelect_External_Courses">
+     <widget class="QPushButton" name="pushButtonSelect_ExternalCourses">
       <property name="geometry">
        <rect>
         <x>640</x>
@@ -887,7 +970,7 @@ border-radius: 4px;</string>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QPushButton" name="pushButton_HomeEC">
+       <widget class="QPushButton" name="pushButton_HomeExternalCourses">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -917,12 +1000,12 @@ border: none;</string>
          <string>Home</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_EC">
+       <widget class="QPushButton" name="pushButton_ExternalCourses">
         <property name="geometry">
          <rect>
           <x>50</x>
           <y>0</y>
-          <width>131</width>
+          <width>121</width>
           <height>21</height>
          </rect>
         </property>
@@ -947,6 +1030,86 @@ border: none;</string>
          <string>/ External courses</string>
         </property>
        </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDuplicate_ExternalCourses">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Duplicate</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemove_ExternalCourses">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonUnselect_ExternalCourses">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Unselect</string>
+      </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea_ExternalCourses">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>771</width>
+        <height>401</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidget_ExternalCourses">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>769</width>
+         <height>399</height>
+        </rect>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -1092,6 +1255,86 @@ border: none;</string>
        </widget>
       </widget>
      </widget>
+     <widget class="QPushButton" name="pushButtonUnselect_Cycles">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Unselect</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDuplicate_Cycles">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Duplicate</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemove_Cycles">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea_Cycles">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>771</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidget_Cycles">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>769</width>
+         <height>389</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="Courses">
      <widget class="QPushButton" name="pushButtonSelect_Courses">
@@ -1233,6 +1476,86 @@ border: none;</string>
          <string>/ Courses</string>
         </property>
        </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDuplicate_Courses">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Duplicate</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemove_Courses">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonUnselect_Courses">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Unselect</string>
+      </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea_Courses">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>771</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidget_Courses">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>769</width>
+         <height>389</height>
+        </rect>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -1378,6 +1701,86 @@ border: none;</string>
        </widget>
       </widget>
      </widget>
+     <widget class="QPushButton" name="pushButtonUnselect_Classrooms">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Unselect</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemove_Classrooms">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDuplicate_Classrooms">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(85, 87, 83);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Duplicate</string>
+      </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea_Classrooms">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>771</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidget_Classrooms">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>769</width>
+         <height>379</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -1386,7 +1789,7 @@ border: none;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>787</width>
+     <width>792</width>
      <height>22</height>
     </rect>
    </property>
