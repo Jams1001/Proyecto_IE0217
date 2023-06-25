@@ -19,17 +19,19 @@ public:
 private slots:
     void on_pushButtonSemesters_clicked();
     void on_pushButtonTeachers_clicked();
-    void on_pushButton_HomeS_clicked();
-    void on_pushButton_HomeT_clicked();
     void on_pushButtonExternalCourses_clicked();
     void on_pushButtonCycles_clicked();
     void on_pushButtonCourses_clicked();
     void on_pushButtonClassrooms_clicked();
+    void on_pushButton_HomeS_clicked();
+    void on_pushButton_HomeT_clicked();
     void on_pushButton_HomeEC_clicked();
     void on_pushButton_HomeCy_clicked();
     void on_pushButton_HomeCo_clicked();
-    void on_pushButton_Cl_clicked();
+    void on_pushButton_HomeCl_clicked();
 
+    void connectButtonsAndLayouts(const QString &tabName);
+    void hideButtons();
     void addNewButton();
     void enterSelectionMode();
     void exitSelectionMode();

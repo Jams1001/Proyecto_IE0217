@@ -17,17 +17,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollAreaWidget_Semesters->setLayout(layout_Semesters);
     QVBoxLayout *layout2 = new QVBoxLayout;
     ui->Semesters->setLayout(layout2);
-    connect(ui->pushButtonAdd_Semesters, &QPushButton::clicked, this, &MainWindow::addNewButton);
 
-    // Oculta los botones "Unselect", "Remove" y "Duplicate" al inicio
-    ui->pushButtonUnselect_Semesters->hide();
-    ui->pushButtonRemove_Semesters->hide();
-    ui->pushButtonDuplicate_Semesters->hide();
+    // Conectar botones para cada pestaña
+    connectButtonsAndLayouts("Semesters");
+    connectButtonsAndLayouts("Teachers");
+    connectButtonsAndLayouts("ExternalCourses");
+    connectButtonsAndLayouts("Cycles");
+    connectButtonsAndLayouts("Courses");
+    connectButtonsAndLayouts("Classrooms");
 
-    connect(ui->pushButtonSelect_Semesters, &QPushButton::clicked, this, &MainWindow::enterSelectionMode);
-    connect(ui->pushButtonUnselect_Semesters, &QPushButton::clicked, this, &MainWindow::exitSelectionMode);
-    connect(ui->pushButtonRemove_Semesters, &QPushButton::clicked, this, &MainWindow::removeSelectedButtons);
-    connect(ui->pushButtonDuplicate_Semesters, &QPushButton::clicked, this, &MainWindow::duplicateSelectedButtons);
+    // Ocultar botones al inicio
+    hideButtons();
 
 }
 
@@ -39,16 +39,50 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonSemesters_clicked(){ui->stackedWidget->setCurrentIndex(1);}
 void MainWindow::on_pushButtonTeachers_clicked(){ui->stackedWidget->setCurrentIndex(2);}
-void MainWindow::on_pushButton_HomeS_clicked(){ui->stackedWidget->setCurrentIndex(0);}
-void MainWindow::on_pushButton_HomeT_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButtonExternalCourses_clicked(){ui->stackedWidget->setCurrentIndex(3);}
 void MainWindow::on_pushButtonCycles_clicked(){ui->stackedWidget->setCurrentIndex(4);}
 void MainWindow::on_pushButtonCourses_clicked(){ui->stackedWidget->setCurrentIndex(5);}
 void MainWindow::on_pushButtonClassrooms_clicked(){ui->stackedWidget->setCurrentIndex(6);}
+void MainWindow::on_pushButton_HomeS_clicked(){ui->stackedWidget->setCurrentIndex(0);}
+void MainWindow::on_pushButton_HomeT_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeEC_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCy_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCo_clicked(){ui->stackedWidget->setCurrentIndex(0);}
-void MainWindow::on_pushButton_Cl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
+void MainWindow::on_pushButton_HomeCl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
+
+
+
+void MainWindow::connectButtonsAndLayouts(const QString &tabName)
+{
+
+    QPushButton *buttonAdd = findChild<QPushButton*>(QString("pushButtonAdd_%1").arg(tabName));
+    QPushButton *buttonSelect = findChild<QPushButton*>(QString("pushButtonSelect_%1").arg(tabName));
+    QPushButton *buttonUnselect = findChild<QPushButton*>(QString("pushButtonUnselect_%1").arg(tabName));
+    QPushButton *buttonRemove = findChild<QPushButton*>(QString("pushButtonRemove_%1").arg(tabName));
+    QPushButton *buttonDuplicate = findChild<QPushButton*>(QString("pushButtonDuplicate_%1").arg(tabName));
+
+    if (buttonAdd) connect(buttonAdd, &QPushButton::clicked, this, &MainWindow::addNewButton);
+    if (buttonSelect) connect(buttonSelect, &QPushButton::clicked, this, &MainWindow::enterSelectionMode);
+    if (buttonUnselect) connect(buttonUnselect, &QPushButton::clicked, this, &MainWindow::exitSelectionMode);
+    if (buttonRemove) connect(buttonRemove, &QPushButton::clicked, this, &MainWindow::removeSelectedButtons);
+    if (buttonDuplicate) connect(buttonDuplicate, &QPushButton::clicked, this, &MainWindow::duplicateSelectedButtons);
+}
+
+void MainWindow::hideButtons()
+{
+    const QStringList tabNames = {"Semesters", "Teachers", "ExternalCourses", "Cycles", "Courses", "Classrooms"};
+
+    for (const QString &tabName : tabNames) {
+        QPushButton *buttonUnselect = findChild<QPushButton*>(QString("pushButtonUnselect_%1").arg(tabName));
+        QPushButton *buttonRemove = findChild<QPushButton*>(QString("pushButtonRemove_%1").arg(tabName));
+        QPushButton *buttonDuplicate = findChild<QPushButton*>(QString("pushButtonDuplicate_%1").arg(tabName));
+
+        if (buttonUnselect) buttonUnselect->hide();
+        if (buttonRemove) buttonRemove->hide();
+        if (buttonDuplicate) buttonDuplicate->hide();
+    }
+}
+
 
 void MainWindow::addNewButton()
 {
