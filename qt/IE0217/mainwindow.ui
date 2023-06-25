@@ -47,7 +47,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="Home">
      <widget class="QLabel" name="label_10">
@@ -308,7 +308,7 @@ border-radius: 25px;</string>
        <string>Courses</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonExternal_Courses">
+     <widget class="QPushButton" name="pushButtonExternalCourses">
       <property name="geometry">
        <rect>
         <x>540</x>
@@ -417,7 +417,7 @@ border-radius: 4px;</string>
           <x>0</x>
           <y>0</y>
           <width>51</width>
-          <height>16</height>
+          <height>21</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -644,9 +644,9 @@ border: none;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
+        <y>50</y>
         <width>771</width>
-        <height>381</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -661,7 +661,7 @@ border: none;</string>
          <x>0</x>
          <y>0</y>
          <width>769</width>
-         <height>379</height>
+         <height>389</height>
         </rect>
        </property>
       </widget>
@@ -890,7 +890,7 @@ border-radius: 20px;</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="External_Courses">
+    <widget class="QWidget" name="ExternalCourses">
      <widget class="QPushButton" name="pushButtonAdd_ExternalCourses">
       <property name="geometry">
        <rect>
@@ -1090,9 +1090,9 @@ border-radius: 20px;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>40</y>
+        <y>50</y>
         <width>771</width>
-        <height>401</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1107,7 +1107,7 @@ border-radius: 20px;</string>
          <x>0</x>
          <y>0</y>
          <width>769</width>
-         <height>399</height>
+         <height>389</height>
         </rect>
        </property>
       </widget>
@@ -1228,7 +1228,7 @@ border: none;</string>
          <rect>
           <x>50</x>
           <y>0</y>
-          <width>61</width>
+          <width>51</width>
           <height>21</height>
          </rect>
         </property>
@@ -1449,7 +1449,7 @@ border: none;</string>
        <widget class="QPushButton" name="pushButton_Co">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>40</x>
           <y>0</y>
           <width>71</width>
           <height>21</height>
@@ -1473,7 +1473,7 @@ background-color: transparent;
 border: none;</string>
         </property>
         <property name="text">
-         <string>/ Courses</string>
+         <string>  / Courses</string>
         </property>
        </widget>
       </widget>
@@ -1759,9 +1759,9 @@ border-radius: 20px;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
+        <y>50</y>
         <width>771</width>
-        <height>381</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1776,7 +1776,7 @@ border-radius: 20px;</string>
          <x>0</x>
          <y>0</y>
          <width>769</width>
-         <height>379</height>
+         <height>389</height>
         </rect>
        </property>
       </widget>
