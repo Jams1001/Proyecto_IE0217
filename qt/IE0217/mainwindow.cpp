@@ -232,7 +232,7 @@ void MainWindow::buttonClicked() {
 
     // Cambia el aspecto del botón para indicar si está seleccionado
     if (!isSelected) {
-        button->setStyleSheet("background-color: #7dff33 ");
+        button->setStyleSheet("background-color: #3eb900 ");
     } else {
         button->setStyleSheet("");
     }
@@ -246,7 +246,8 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
             // Si se hace click una vez por ahora ok
             bool ok;
             QString newName = QInputDialog::getText(this, tr("Edit Button Name"),
-                                                     tr("Button name:"), QLineEdit::Normal,
+                                                     tr("Write down the name:"), 
+                                                     QLineEdit::Normal,
                                                      button->text(), &ok);
             if (ok && !newName.isEmpty()) {
                 button->setText(newName);
