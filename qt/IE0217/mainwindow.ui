@@ -50,7 +50,7 @@
      <number>0</number>
     </property>
     <widget class="QWidget" name="Home">
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="label_EIE">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -87,7 +87,7 @@ color: rgb(85, 87, 83);</string>
        <string> Escuela de Ingeniería Eléctrica</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonSchedule_Generator">
+     <widget class="QPushButton" name="pushButtonScheduleGenerator">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -121,7 +121,7 @@ border-radius: 25px;</string>
 (Coming Soon)</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonCurrent_Schedule">
+     <widget class="QPushButton" name="pushButtonCurrentSchedule">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -241,7 +241,7 @@ border-radius: 25px;</string>
        <string>Cycles</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_9">
+     <widget class="QLabel" name="label_UCR">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -1780,6 +1780,239 @@ border-radius: 20px;</string>
         </rect>
        </property>
       </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="CurrentSchedule">
+     <widget class="QFrame" name="frame_16">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>781</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(136, 138, 133);
+border-style: solid;
+border-bottom-color: rgb(100, 100, 103);
+border-width: 0px 0px 1px 0px;
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QFrame" name="frame_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>761</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">    border-style: solid;
+    border-color: rgb(100, 100, 103);
+    border-width: 1px 1px 1px 1px;
+border-radius: 4px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="pushButton_HomeCu">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>51</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>89</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent; 
+border: none;</string>
+        </property>
+        <property name="text">
+         <string>Home</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_Cu">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>0</y>
+          <width>141</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>500</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent; 
+border: none;</string>
+        </property>
+        <property name="text">
+         <string>  / Current Schedule</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea_CurrentSchedule">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>771</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidget_CurrentSchedule">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>769</width>
+         <height>389</height>
+        </rect>
+       </property>
+       <widget class="QTableWidget" name="scheduleTable">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>60</y>
+          <width>256</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButtonAdd_CurrentSchedule">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(76, 0, 255);
+color: rgb(255, 255, 255);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Add</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonUnselect_CurrentSchedule">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(245, 121, 0);
+color: rgb(255, 255, 255);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Unselect</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonDuplicate_CurrentSchedule">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(76, 0, 255);
+color: rgb(255, 255, 255);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Duplicate</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonSelect_CurrentSchedule">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(245, 121, 0);
+color: rgb(255, 255, 255);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Select</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemove_CurrentSchedule">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(204, 0, 0);
+color: rgb(255, 255, 255);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
      </widget>
     </widget>
    </widget>

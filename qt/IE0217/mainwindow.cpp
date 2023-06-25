@@ -6,6 +6,8 @@
 #include <QInputDialog>
 #include <QLineEdit>
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -42,18 +44,24 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+
+
+
+
 void MainWindow::on_pushButtonSemesters_clicked(){ui->stackedWidget->setCurrentIndex(1);}
 void MainWindow::on_pushButtonTeachers_clicked(){ui->stackedWidget->setCurrentIndex(2);}
 void MainWindow::on_pushButtonExternalCourses_clicked(){ui->stackedWidget->setCurrentIndex(3);}
 void MainWindow::on_pushButtonCycles_clicked(){ui->stackedWidget->setCurrentIndex(4);}
 void MainWindow::on_pushButtonCourses_clicked(){ui->stackedWidget->setCurrentIndex(5);}
 void MainWindow::on_pushButtonClassrooms_clicked(){ui->stackedWidget->setCurrentIndex(6);}
+void MainWindow::on_pushButtonCurrentSchedule_clicked(){ui->stackedWidget->setCurrentIndex(7);}
 void MainWindow::on_pushButton_HomeS_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeT_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeEC_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCy_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCo_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
+void MainWindow::on_pushButton_HomeCu_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 
 void MainWindow::connectButtons(const QString &tabName) {
 
@@ -88,7 +96,9 @@ void MainWindow::addNewButton() {
     QVBoxLayout *currentLayout = getCurrentLayout(); // Obtiene el layout actual
     if (!currentLayout) return; // Si no hay un layout actual, sale de la función
     
-    dialog_wb dialog(this); // Crea una instancia de tu cuadro de diálogo personalizado
+    QString currentTabName = getTabNameFromLayout(currentLayout); // Obtiene el nombre de la pestaña actual
+    
+    dialog_wb dialog(this); 
     if (dialog.exec() == QDialog::Accepted) { // Muestra el cuadro de diálogo y verifica si el usuario hizo clic en "Agregar"
         QString buttonName = dialog.getButtonName(); // Obtiene el nombre del botón ingresado por el usuario
 
@@ -112,9 +122,23 @@ void MainWindow::addNewButton() {
             connect(newButton, &QPushButton::clicked, this, &MainWindow::buttonClicked);
             newButton->installEventFilter(this); // Instala un filtro de eventos para detectar el doble clic
             currentLayout->addWidget(newButton);
+
+            // Si la pestaña actual es "Teachers", crea un objeto Teacher asociado al botón
+            if (currentTabName == "Teachers") {
+                Teacher newTeacher(buttonName.toStdString());
+                teachersMap.insert(newButton, newTeacher); // Usando insert en lugar de []
+            }
+
+            // Si la pestaña actual es "Classrooms", crea un objeto Classroom asociado al botón
+            if (currentTabName == "Classrooms") {
+                Classroom newClassroom(buttonName.toStdString());
+                classroomsMap.insert(newButton, newClassroom);
+            }
         }
     }
 }
+
+
 
 
 void MainWindow::enterSelectionMode()
@@ -223,7 +247,7 @@ void MainWindow::duplicateSelectedButtons() {
 void MainWindow::buttonClicked() {
     if (!isSelectionMode) return; // Si no estamos en modo de selección, no hacemos nada
 
-    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    QPushButton *button = qobject_cast<QPushButton*>(sender()); 
     if (!button) return;
 
     // Cambia el estado de selección del botón
@@ -297,3 +321,4 @@ QString MainWindow::getTabNameFromLayout(QVBoxLayout *layout) {
         return QString();
     }
 }
+

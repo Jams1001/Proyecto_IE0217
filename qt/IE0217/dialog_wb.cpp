@@ -14,6 +14,5 @@ dialog_wb::~dialog_wb()
 }
 
 QString dialog_wb::getButtonName() const {
-    // Asume que tienes un QLineEdit llamado lineEdit en tu cuadro de diálogo
     return ui->lineEdit->text();
 }
