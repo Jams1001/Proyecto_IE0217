@@ -30,7 +30,7 @@ private slots:
     void on_pushButton_HomeCo_clicked();
     void on_pushButton_HomeCl_clicked();
 
-    void connectButtonsAndLayouts(const QString &tabName);
+    void connectButtons(const QString &tabName);
     void hideButtons();
     void addNewButton();
     void enterSelectionMode();
@@ -38,13 +38,20 @@ private slots:
     void removeSelectedButtons();
     void duplicateSelectedButtons();
     void buttonClicked();
+    QVBoxLayout* getCurrentLayout();
+    QString getTabNameFromLayout(QVBoxLayout *layout);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     Ui::MainWindow *ui;
-    QLayout *layout_Semesters;
+    QVBoxLayout *layout_Semesters;
+    QVBoxLayout *layout_Teachers;
+    QVBoxLayout *layout_ExternalCourses;
+    QVBoxLayout *layout_Cycles;
+    QVBoxLayout *layout_Courses;
+    QVBoxLayout *layout_Classrooms;
     bool isSelectionMode;
 };
 #endif // MAINWINDOW_H
