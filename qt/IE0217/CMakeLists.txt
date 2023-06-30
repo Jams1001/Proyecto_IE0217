@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         dialog_wb.h
         fun/fun.cpp
         fun/fun.h
+        My_Resources.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -65,3 +66,5 @@ install(TARGETS IE0217
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(IE0217)
 endif()
+
+
