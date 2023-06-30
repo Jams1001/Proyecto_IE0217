@@ -1,7 +1,7 @@
 #include "fun.h"
 
-Curso::Curso(const std::string& sigla, const std::string& nombre, const std::string& departamento)
-    : sigla(sigla), nombre(nombre), departamento(departamento) {}
+Curso::Curso(const std::string& ciclo, const std::string& sigla, const std::string& nombre, const std::string& departamento)
+    : ciclo(ciclo), sigla(sigla), nombre(nombre), departamento(departamento) {}
 
 Teacher::Teacher(const std::string& nombre) : nombre(nombre) {}
 

@@ -18,17 +18,19 @@
  */
 class Curso {
 public:
+    std::string ciclo; /**< the cycle to which the course belongs. */
     std::string sigla; /**< The course code. */
     std::string nombre; /**< The course name. */
     std::string departamento; /**< The department offering the course. */
 
     /**
      * @brief Constructs a Curso object.
+     * @param ciclo The cycle to which the course belongs.
      * @param sigla The course code.
      * @param nombre The course name.
      * @param departamento The department offering the course.
      */
-    Curso(const std::string& sigla, const std::string& nombre, const std::string& departamento);
+    Curso(const std::string& ciclo, const std::string& sigla, const std::string& nombre, const std::string& departamento);
 };
 
 /**

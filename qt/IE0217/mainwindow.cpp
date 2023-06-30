@@ -6,7 +6,7 @@
 #include <QInputDialog>
 #include <QLineEdit>
 #include <QComboBox>
-
+#include <QCheckBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -23,16 +23,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollAreaWidget_ExternalCourses->setLayout(layout_ExternalCourses);
     layout_Cycles = new QVBoxLayout;
     ui->scrollAreaWidget_Cycles->setLayout(layout_Cycles);
-    layout_Courses = new QVBoxLayout;
-    ui->scrollAreaWidget_Courses->setLayout(layout_Courses);
+    //layout_Courses = new QVBoxLayout;
+    //ui->scrollAreaWidget_Courses->setLayout(layout_Courses);
     layout_Classrooms = new QVBoxLayout;
     ui->scrollAreaWidget_Classrooms->setLayout(layout_Classrooms);
 
-    // Agregando headers
-    QStringList headers = {"Ciclo", "Sigla", "Nombre", "G", "Día", "horaInicio", "horaFinal", "Aula", "Cupo", "Profesor", "Dept", "Observaciones"};
-    ui->scheduleTable->setColumnCount(headers.size());
-    ui->scheduleTable->setHorizontalHeaderLabels(headers);
-    connect(ui->pushButtonAdd_CurrentSchedule, &QPushButton::clicked, this, &MainWindow::on_addScheduleRowButton_clicked);
+    // Tabla CurrentSchedule
+    QStringList headers_CurrentSchedule = {"Ciclo", "Sigla", "Nombre", "G", "Día", "horaInicio", "horaFinal", "Aula", "Cupo", "Profesor", "Dept", "Observaciones"};
+    ui->scheduleTable_CurrentSchedule->setColumnCount(headers_CurrentSchedule.size());
+    ui->scheduleTable_CurrentSchedule->setHorizontalHeaderLabels(headers_CurrentSchedule);
+    connect(ui->pushButtonAdd_CurrentSchedule, &QPushButton::clicked, this, &MainWindow::on_addScheduleRowButton_CurrentSchedule_clicked);
+
+    // Tabla Courses
+    QStringList headers_Courses = {"Select", "Ciclo", "Sigla", "Nombre", "Departamento", "Acciones"};
+    ui->scheduleTable_Courses->setColumnCount(headers_Courses.size());
+    ui->scheduleTable_Courses->setHorizontalHeaderLabels(headers_Courses);
+    connect(ui->pushButtonAdd_Courses, &QPushButton::clicked, this, &MainWindow::on_addScheduleRowButton_Courses_clicked);
+    connect(ui->pushButtonRemove_Courses, &QPushButton::clicked, this, &MainWindow::on_deleteSelectedRowsButton_clicked);
+
 
 
     // Conectar botones para cada pestaña
@@ -83,7 +91,7 @@ void MainWindow::connectButtons(const QString &tabName) {
 }
 
 void MainWindow::hideButtons() {
-    const QStringList tabNames = {"Semesters", "Teachers", "ExternalCourses", "Cycles", "Courses", "Classrooms"};
+    const QStringList tabNames = {"Semesters", "Teachers", "ExternalCourses", "Cycles", "Classrooms"};
 
     for (const QString &tabName : tabNames) {
         QPushButton *buttonUnselect = findChild<QPushButton*>(QString("pushButtonUnselect_%1").arg(tabName));
@@ -327,13 +335,13 @@ QString MainWindow::getTabNameFromLayout(QVBoxLayout *layout) {
 }
 
 
-void MainWindow::on_addScheduleRowButton_clicked() {
+void MainWindow::on_addScheduleRowButton_CurrentSchedule_clicked() {
     // Agrega una nueva fila al final de la tabla
-    int newRow = ui->scheduleTable->rowCount();
-    ui->scheduleTable->insertRow(newRow);
+    int newRow = ui->scheduleTable_CurrentSchedule->rowCount();
+    ui->scheduleTable_CurrentSchedule->insertRow(newRow);
     
     // Crea celdas de entrada de texto o desplegables para cada columna
-    for (int col = 0; col < ui->scheduleTable->columnCount(); ++col) {
+    for (int col = 0; col < ui->scheduleTable_CurrentSchedule->columnCount(); ++col) {
         if (col == 0 || col == 1 || col == 2 || col == 7 || col == 9 || col == 10) {
             QComboBox *comboBox = new QComboBox(this);
             comboBox->setEditable(true);
@@ -354,10 +362,98 @@ void MainWindow::on_addScheduleRowButton_clicked() {
             // Establece el elemento en blanco como el ítem actual
             comboBox->setCurrentIndex(0);
             
-            ui->scheduleTable->setCellWidget(newRow, col, comboBox);
+            ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, col, comboBox);
         } else {
             QLineEdit *lineEdit = new QLineEdit(this);
-            ui->scheduleTable->setCellWidget(newRow, col, lineEdit);
+            ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, col, lineEdit);
         }
+    }
+}
+
+
+
+void MainWindow::on_addScheduleRowButton_Courses_clicked() {
+    int newRow = ui->scheduleTable_Courses->rowCount();
+    ui->scheduleTable_Courses->insertRow(newRow);
+
+    // Columna para casillas de verificación
+    QCheckBox *checkBox = new QCheckBox(this);
+    ui->scheduleTable_Courses->setCellWidget(newRow, 0, checkBox);
+
+    for (int col = 1; col < ui->scheduleTable_Courses->columnCount() - 1; ++col) {
+        QLineEdit *lineEdit = new QLineEdit(this);
+        connect(lineEdit, &QLineEdit::textEdited, this, &MainWindow::on_lineEdit_textEdited);
+        ui->scheduleTable_Courses->setCellWidget(newRow, col, lineEdit);
+    }
+
+    // Columna de botón Guardar
+    QPushButton *saveButton = new QPushButton("Guardar", this);
+    connect(saveButton, &QPushButton::clicked, this, &MainWindow::on_saveCourseButton_clicked);
+    ui->scheduleTable_Courses->setCellWidget(newRow, ui->scheduleTable_Courses->columnCount() - 1, saveButton);
+}
+
+void MainWindow::on_lineEdit_textEdited() {
+    QLineEdit* lineEditSender = qobject_cast<QLineEdit*>(sender());
+    if (!lineEditSender) return;
+
+    // Encuentra la fila que contiene el QLineEdit que emitió la señal
+    int editedRow = -1;
+    for (int row = 0; row < ui->scheduleTable_Courses->rowCount(); ++row) {
+        for (int col = 1; col < ui->scheduleTable_Courses->columnCount() - 1; ++col) {
+            if (ui->scheduleTable_Courses->cellWidget(row, col) == lineEditSender) {
+                editedRow = row;
+                break;
+            }
+        }
+        if (editedRow != -1) break;
+    }
+
+    // Cambia el color de fondo de la fila a amarillo para indicar que ha sido editada
+    if (editedRow != -1) {
+        for (int col = 1; col < ui->scheduleTable_Courses->columnCount() - 1; ++col) {
+            qobject_cast<QLineEdit*>(ui->scheduleTable_Courses->cellWidget(editedRow, col))->setStyleSheet("background-color: yellow");
+        }
+    }
+}
+void MainWindow::on_deleteSelectedRowsButton_clicked() {
+    // Recorrer las filas en reversa para evitar problemas al eliminar varias filas
+    for (int row = ui->scheduleTable_Courses->rowCount() - 1; row >= 0;--row) {
+        QCheckBox *checkBox = qobject_cast<QCheckBox*>(ui->scheduleTable_Courses->cellWidget(row, 0));
+        if (checkBox && checkBox->isChecked()) {
+            ui->scheduleTable_Courses->removeRow(row);
+        }
+    }
+}
+
+void MainWindow::on_saveCourseButton_clicked() {
+    QPushButton* buttonSender = qobject_cast<QPushButton*>(sender());
+    if (!buttonSender) return;
+
+    int rowToSave = -1;
+    for (int row = 0; row < ui->scheduleTable_Courses->rowCount(); ++row) {
+        if (ui->scheduleTable_Courses->cellWidget(row, ui->scheduleTable_Courses->columnCount() - 1) == buttonSender) {
+            rowToSave = row;
+            break;
+        }
+    }
+
+    if (rowToSave == -1) return;
+
+    QString ciclo = qobject_cast<QLineEdit*>(ui->scheduleTable_Courses->cellWidget(rowToSave, 1))->text();
+    QString sigla = qobject_cast<QLineEdit*>(ui->scheduleTable_Courses->cellWidget(rowToSave, 2))->text();
+    QString nombre = qobject_cast<QLineEdit*>(ui->scheduleTable_Courses->cellWidget(rowToSave, 3))->text();
+    QString departamento = qobject_cast<QLineEdit*>(ui->scheduleTable_Courses->cellWidget(rowToSave, 4))->text();
+
+    // Validar que las celdas no estén vacías
+    if (ciclo.isEmpty() || sigla.isEmpty() || nombre.isEmpty() || departamento.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Campos vacíos.");
+        return;
+    }
+
+    // Aquí de alguna forma tengo que implementar  qué hacer con esos fields
+
+    // Cambiar el color de fondo de la fila a blanco para indicar que ha sido guardada
+    for (int col = 1; col < ui->scheduleTable_Courses->columnCount() - 1; ++col) {
+        qobject_cast<QLineEdit*>(ui->scheduleTable_Courses->cellWidget(rowToSave, col))->setStyleSheet("background-color: white");
     }
 }
