@@ -5,7 +5,18 @@ Curso::Curso(const std::string& sigla, const std::string& nombre, const std::str
 
 Teacher::Teacher(const std::string& nombre) : nombre(nombre) {}
 
+std::string Teacher::getName() const {
+    // Devuelve el nombre del profesor (asumiendo que tienes un miembro de clase que almacena el nombre)
+    return this->nombre;
+}
+
 Classroom::Classroom(const std::string& numeroAula) : numeroAula(numeroAula) {}
+
+std::string Classroom::getName() const {
+    // Devuelve el nombre del profesor (asumiendo que tienes un miembro de clase que almacena el nombre)
+    return this->numeroAula;
+}
+
 
 void Ciclo::agregarCurso(const Curso& curso) {
     cursos.push_back(curso);

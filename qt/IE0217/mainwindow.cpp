@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QComboBox>
 
 
 
@@ -27,12 +28,18 @@ MainWindow::MainWindow(QWidget *parent)
     layout_Classrooms = new QVBoxLayout;
     ui->scrollAreaWidget_Classrooms->setLayout(layout_Classrooms);
 
+    // Agregando headers
+    QStringList headers = {"Ciclo", "Sigla", "Nombre", "G", "Día", "horaInicio", "horaFinal", "Aula", "Cupo", "Profesor", "Dept", "Observaciones"};
+    ui->scheduleTable->setColumnCount(headers.size());
+    ui->scheduleTable->setHorizontalHeaderLabels(headers);
+    connect(ui->pushButtonAdd_CurrentSchedule, &QPushButton::clicked, this, &MainWindow::on_addScheduleRowButton_clicked);
+
+
     // Conectar botones para cada pestaña
     connectButtons("Semesters");
     connectButtons("Teachers");
     connectButtons("ExternalCourses");
     connectButtons("Cycles");
-    connectButtons("Courses");
     connectButtons("Classrooms");
 
     // Ocultar botones al inicio
@@ -43,9 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
     delete ui;
 }
-
-
-
 
 
 void MainWindow::on_pushButtonSemesters_clicked(){ui->stackedWidget->setCurrentIndex(1);}
@@ -322,3 +326,38 @@ QString MainWindow::getTabNameFromLayout(QVBoxLayout *layout) {
     }
 }
 
+
+void MainWindow::on_addScheduleRowButton_clicked() {
+    // Agrega una nueva fila al final de la tabla
+    int newRow = ui->scheduleTable->rowCount();
+    ui->scheduleTable->insertRow(newRow);
+    
+    // Crea celdas de entrada de texto o desplegables para cada columna
+    for (int col = 0; col < ui->scheduleTable->columnCount(); ++col) {
+        if (col == 0 || col == 1 || col == 2 || col == 7 || col == 9 || col == 10) {
+            QComboBox *comboBox = new QComboBox(this);
+            comboBox->setEditable(true);
+            
+            // Agrega un elemento en blanco al inicio
+            comboBox->addItem("");
+            
+            if (col == 9) {
+                for (auto it = teachersMap.begin(); it != teachersMap.end(); ++it) {
+                    comboBox->addItem(QString::fromStdString(it.value().getName()));
+                }
+            } else if (col == 7) {
+                for (auto it = classroomsMap.begin(); it != classroomsMap.end(); ++it) {
+                    comboBox->addItem(QString::fromStdString(it.value().getName()));
+                }
+            }
+            
+            // Establece el elemento en blanco como el ítem actual
+            comboBox->setCurrentIndex(0);
+            
+            ui->scheduleTable->setCellWidget(newRow, col, comboBox);
+        } else {
+            QLineEdit *lineEdit = new QLineEdit(this);
+            ui->scheduleTable->setCellWidget(newRow, col, lineEdit);
+        }
+    }
+}

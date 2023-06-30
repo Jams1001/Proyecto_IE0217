@@ -55,6 +55,7 @@ private slots:
     void on_pushButton_HomeCl_clicked();
     void on_pushButton_HomeCu_clicked();
 
+
     // Other slots
     void connectButtons(const QString &tabName);
     void hideButtons();
@@ -66,6 +67,8 @@ private slots:
     void buttonClicked();
     QVBoxLayout* getCurrentLayout();
     QString getTabNameFromLayout(QVBoxLayout *layout);
+
+    void on_addScheduleRowButton_clicked();
 
 protected:
     /**
@@ -87,6 +90,7 @@ private:
     bool isSelectionMode; /**< Flag indicating whether the selection mode is enabled or not. */
     QMap<QPushButton*, Teacher> teachersMap; /**< Map to store the association between buttons and teachers. */
     QMap<QPushButton*, Classroom> classroomsMap; /**< Map to store the association between buttons and classrooms. */
+    //QMap<QPushButton*, Cycle> cyclesMap; 
 };
 
 #endif // MAINWINDOW_H
