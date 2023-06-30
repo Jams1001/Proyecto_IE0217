@@ -87,36 +87,36 @@ public:
  */
 class Fila {
 public:
-    Ciclo* ciclo; /**< Pointer to the cycle containing the row. */
+    std::string ciclo; /**< The cycle to which the course belongs. */
     std::string sigla; /**< The course code. */
-    std::string nombre; /**< The course name. */
-    int grupo; /**< The course group. */
+    std::string nombrecurso; /**< The course name. */
+    std::string grupo; /**< The course group. */
     std::string dia; /**< The day of the week. */
-    int horaInicio; /**< The start time of the class. */
-    int horaFinal; /**< The end time of the class. */
-    int aula; /**< The classroom number. */
-    int cupo; /**< The class capacity. */
+    std::string horainicio; /**< The start time of the class. */
+    std::string horafinal; /**< The end time of the class. */
+    std::string aula; /**< The classroom number. */
+    std::string cupo; /**< The class capacity. */
     std::string profesor; /**< The teacher's name. */
     std::string departamento; /**< The department offering the course. */
     std::string observaciones; /**< Additional observations. */
 
     /**
      * @brief Constructs a Fila object.
-     * @param ciclo Pointer to the cycle containing the row.
+     * @param ciclo The cycle to which the course belongs.
      * @param sigla The course code.
-     * @param nombre The course name.
+     * @param nombrecurso The course name.
      * @param grupo The course group.
      * @param dia The day of the week.
-     * @param horaInicio The start time of the class.
-     * @param horaFinal The end time of the class.
+     * @param horainicio The start time of the class.
+     * @param horafinal The end time of the class.
      * @param aula The classroom number.
      * @param cupo The class capacity.
      * @param profesor The teacher's name.
      * @param departamento The department offering the course.
      * @param observaciones Additional observations.
      */
-    Fila(Ciclo* ciclo, const std::string& sigla, const std::string& nombre, int grupo,
-         const std::string& dia, int horaInicio, int horaFinal, int aula, int cupo,
+    Fila(const std::string& ciclo, const std::string& sigla, const std::string& nombrecurso, const std::string& grupo,
+         const std::string& dia, const std::string& horainicio, const std::string& horafinal, const std::string& aula, const std::string& cupo,
          const std::string& profesor, const std::string& departamento, const std::string& observaciones);
 };
 

@@ -68,11 +68,18 @@ private slots:
     QVBoxLayout* getCurrentLayout();
     QString getTabNameFromLayout(QVBoxLayout *layout);
 
-    void on_addScheduleRowButton_CurrentSchedule_clicked();
-    void on_addScheduleRowButton_Courses_clicked();
-    void on_lineEdit_textEdited();
-    void on_deleteSelectedRowsButton_clicked();
-    void on_saveCourseButton_clicked();
+    // Tab CurrentSchedule
+    void on_addRow_CurrentSchedule_clicked();
+    void on_lineEdit_textEdited_CurrentSchedule();
+    void on_deleteSelectedRows_CurrentSchedule_clicked();
+    void on_saveRow_CurrentSchedule_clicked();
+
+    // Tab Courses
+    void on_addRow_Courses_clicked();
+    void on_comboBox_textEdited_CurrentSchedule();
+    void on_lineEdit_textEdited_Courses();
+    void on_deleteSelectedRows_Courses_clicked();
+    void on_saveRow_Courses_clicked();
 
 protected:
     /**
@@ -94,6 +101,8 @@ private:
     bool isSelectionMode; /**< Flag indicating whether the selection mode is enabled or not. */
     QMap<QPushButton*, Teacher> teachersMap; /**< Map to store the association between buttons and teachers. */
     QMap<QPushButton*, Classroom> classroomsMap; /**< Map to store the association between buttons and classrooms. */
+    std::vector<Curso> cursos; /**< Vector to store the courses. */
+    std::vector<Fila> filas; /**< Vector to store the courses. */
 };
 
 #endif // MAINWINDOW_H

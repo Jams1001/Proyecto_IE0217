@@ -1836,64 +1836,10 @@ border-radius: 20px;</string>
        <string>Add</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButtonUnselect_CurrentSchedule">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>450</y>
-        <width>121</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(245, 121, 0);
-color: rgb(255, 255, 255);
-border-radius: 20px;</string>
-      </property>
-      <property name="text">
-       <string>Unselect</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButtonDuplicate_CurrentSchedule">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>450</y>
-        <width>121</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(76, 0, 255);
-color: rgb(255, 255, 255);
-border-radius: 20px;</string>
-      </property>
-      <property name="text">
-       <string>Duplicate</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButtonSelect_CurrentSchedule">
-      <property name="geometry">
-       <rect>
-        <x>640</x>
-        <y>450</y>
-        <width>121</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(245, 121, 0);
-color: rgb(255, 255, 255);
-border-radius: 20px;</string>
-      </property>
-      <property name="text">
-       <string>Select</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButtonRemove_CurrentSchedule">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>640</x>
         <y>450</y>
         <width>121</width>
         <height>41</height>
