@@ -101,8 +101,13 @@ private:
     bool isSelectionMode; /**< Flag indicating whether the selection mode is enabled or not. */
 
 
-    QMap<QPushButton*, int> teacherIndices;
-    QMap<QPushButton*, int> classroomIndices;
+    // Haciendo magia - opción TEMPORAL para autocompletar y filtrar dropdowns
+    void updateCourseOptionsOnCycleOrDepartmentChange(int row, const QString &cycleOrDepartment);
+    void updateCourseOptionsOnSiglaOrNameChange(int row, const QString &siglaOrName);
+
+
+    QMap<QPushButton*, int> teacherIndices; /**< Map to store the indices of the teachers. */
+    QMap<QPushButton*, int> classroomIndices; /**< Map to store the indices of the classrooms. */
 
 
     std::vector<Classroom> classrooms; /**< Vector to store the classrooms. */

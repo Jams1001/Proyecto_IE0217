@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QCheckBox>
+#include <set>
 #include <QDebug>
 
 
@@ -413,6 +414,16 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
 
             comboBox->addItem("");
 
+            if (col == 1 /* Ciclo */ || col == 11 /* Departamento */) {
+                connect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), [this, comboBox, newRow](const QString &text) {
+                    updateCourseOptionsOnCycleOrDepartmentChange(newRow, text);
+                });
+            } else if (col == 2 /* Sigla */ || col == 3 /* Nombre */) {
+                connect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), [this, comboBox, newRow](const QString &text) {
+                    updateCourseOptionsOnSiglaOrNameChange(newRow, text);
+                });
+            }
+
             switch (col) {
                 case 1: // Ciclo
                     for (const Curso& curso : cursos) {
@@ -431,12 +442,12 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
                     break;
                 case 8: // Aula
                     for (const Classroom& classroom : classrooms) {
-                        comboBox->addItem(QString::fromStdString(classroom.numeroAula)); 
+                        comboBox->addItem(QString::fromStdString(classroom.numeroAula));
                     }
                     break;
                 case 10: // Profesor
                     for (const Teacher& teacher : teachers) {
-                        comboBox->addItem(QString::fromStdString(teacher.nombre)); 
+                        comboBox->addItem(QString::fromStdString(teacher.nombre));
                     }
                     break;
                 case 11: // Departamento
@@ -459,6 +470,105 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
     connect(saveButton, &QPushButton::clicked, this, &MainWindow::on_saveRow_CurrentSchedule_clicked);
     ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, ui->scheduleTable_CurrentSchedule->columnCount() - 1, saveButton);
 }
+
+
+
+
+
+// Algo que probablemente no sea tan necesario cuando separe los ciclos de los cursos como objetos contenedores (porque será más fácil). Para el proyecto se propone como beta
+void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int row, const QString& selectedText) {
+    if (selectedText.isEmpty()) return; // Si la selección es vacía, retorno
+
+    Curso selectedCourse("", "", "", "");
+    bool isFound = false;
+
+    for (const Curso& curso : cursos) {
+        if (curso.sigla == selectedText.toStdString() || curso.nombre == selectedText.toStdString()) {
+            selectedCourse = curso;
+            isFound = true;
+            break;
+        }
+    }
+
+    if (!isFound) return; // Si no se encontró el curso, retorno también
+
+    // Ahora actualizamos los combos en la fila especificada.
+    QComboBox *cicloCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 1));
+    QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 2));
+    QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 3));
+    QComboBox *departamentoCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 11));
+
+    // Desconectamos las señales temporalmente para evitar un ciclo infinito de actualizaciones
+    disconnect(cicloCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
+    disconnect(departamentoCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
+
+    cicloCombo->setCurrentText(QString::fromStdString(selectedCourse.ciclo));
+    siglaCombo->setCurrentText(QString::fromStdString(selectedCourse.sigla));
+    nombreCombo->setCurrentText(QString::fromStdString(selectedCourse.nombre));
+    departamentoCombo->setCurrentText(QString::fromStdString(selectedCourse.departamento));
+
+    // Reconectamos las señales
+    connect(cicloCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
+    connect(departamentoCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
+}
+
+
+
+
+
+void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int row, const QString& selectedText) {
+    std::set<std::string> uniqueSiglas;
+    std::set<std::string> uniqueNombres;
+
+    for (const Curso& curso : cursos) {
+        if (selectedText.isEmpty() || curso.ciclo == selectedText.toStdString() || curso.departamento == selectedText.toStdString()) {
+            uniqueSiglas.insert(curso.sigla);
+            uniqueNombres.insert(curso.nombre);
+        }
+    }
+
+    QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 2));
+    QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 3));
+
+    // Desconectamos las señales temporalmente para evitar un ciclo infinito de actualizaciones.
+    disconnect(siglaCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
+    disconnect(nombreCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
+
+    // Limpiamos y re-llenamos los combos de Sigla y Nombre.
+    siglaCombo->clear();
+    nombreCombo->clear();
+    
+    for (const auto& sigla : uniqueSiglas) {
+        siglaCombo->addItem(QString::fromStdString(sigla));
+    }
+
+    for (const auto& nombre : uniqueNombres) {
+        nombreCombo->addItem(QString::fromStdString(nombre));
+    }
+
+    // Reconectamos las señales.
+    connect(siglaCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
+    connect(nombreCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
