@@ -104,6 +104,7 @@ void MainWindow::hideButtons() {
     }
 }
 
+
 void MainWindow::addNewButton() {
     QVBoxLayout *currentLayout = getCurrentLayout(); // Obtiene el layout actual
     if (!currentLayout) return; // Si no hay un layout actual, sale de la función
@@ -135,20 +136,26 @@ void MainWindow::addNewButton() {
             newButton->installEventFilter(this); // Instala un filtro de eventos para detectar el doble clic
             currentLayout->addWidget(newButton);
 
-            // Si la pestaña actual es "Teachers", crea un objeto Teacher asociado al botón
+            // Si la pestaña actual es "Teachers", crea un objeto Teacher y agrega al vector
             if (currentTabName == "Teachers") {
-                Teacher newTeacher(buttonName.toStdString());
-                teachersMap.insert(newButton, newTeacher);
+                Teacher teacher(buttonName.toStdString());
+                teachers.push_back(teacher); 
+                teacherIndices[newButton] = teachers.size() - 1; // Guarda el índice del nuevo profesor ya que estos botones no son listas, como los cursos o las filas. Entonces permite borrar los objetos de manera evificiente.
+                for (const Teacher& teacher : teachers) {
+                    qDebug()    << "Profesor: " << QString::fromStdString(teacher.nombre);
+                }
             }
 
-            // Si la pestaña actual es "Classrooms", crea un objeto Classroom asociado al botón
+            // Si la pestaña actual es "Classrooms", crea un objeto Classroom y agrega al vector
             if (currentTabName == "Classrooms") {
-                Classroom newClassroom(buttonName.toStdString());
-                classroomsMap.insert(newButton, newClassroom);
+                Classroom classroom(buttonName.toStdString());
+                classrooms.push_back(classroom); 
+                classroomIndices[newButton] = classrooms.size() - 1; // Guarda el índice del nuevo classroom ya que estos botones no son listas, como los cursos o las filas. Entonces permite borrar los objetos de manera evificiente.
             }
         }
     }
 }
+
 
 
 
@@ -202,15 +209,48 @@ void MainWindow::exitSelectionMode()
 }
 
 
-void MainWindow::removeSelectedButtons()
-{
+void MainWindow::removeSelectedButtons() {
     QVBoxLayout *currentLayout = getCurrentLayout(); // Obtiene el layout actual
     if (!currentLayout) return; // Si no hay un layout actual, sale de la función
+
+    QString currentTabName = getTabNameFromLayout(currentLayout); // Obtiene el nombre de la pestaña actual
 
     // Itera en reversa para no alterar el índice de los elementos restantes al eliminar
     for (int i = currentLayout->count() - 1; i >= 0; --i) {
         QPushButton *button = qobject_cast<QPushButton*>(currentLayout->itemAt(i)->widget());
         if (button && button->property("isSelected").toBool()) {
+            // Elimina el objeto asociado al botón si la pestaña actual es "Teachers"
+            if (currentTabName == "Teachers") {
+                auto it = teacherIndices.find(button);
+                if (it != teacherIndices.end()) {
+                    int index = it.value();
+                    teachers.erase(teachers.begin() + index); // Erase the teacher from the vector
+                    teacherIndices.erase(it); // Erase the entry from the map
+
+                    // Decrement the stored indices for all subsequent teachers
+                    for (auto it = teacherIndices.begin(); it != teacherIndices.end(); ++it) {
+                        if (it.value() > index) {
+                            it.value() = it.value() - 1;
+                        }
+                    }
+                }
+            }
+
+            if (currentTabName == "Classrooms") {
+                auto it = classroomIndices.find(button);
+                if (it != classroomIndices.end()) {
+                    int index = it.value();
+                    classrooms.erase(classrooms.begin() + index); // Erase the classroom from the vector
+                    classroomIndices.erase(it); // Erase the entry from the map
+
+                    // Decrement the stored indices for all subsequent classrooms
+                    for (auto it = classroomIndices.begin(); it != classroomIndices.end(); ++it) {
+                        if (it.value() > index) {
+                            it.value() = it.value() - 1;
+                        }
+                    }
+                }
+            }
             // Remueve el botón del layout y lo elimina
             currentLayout->removeWidget(button);
             delete button;
@@ -218,9 +258,13 @@ void MainWindow::removeSelectedButtons()
     }
 }
 
+
+
 void MainWindow::duplicateSelectedButtons() {
     QVBoxLayout *currentLayout = getCurrentLayout(); // Obtiene el layout actual
     if (!currentLayout) return; // Si no hay un layout actual, sale de la función
+    
+    QString currentTabName = getTabNameFromLayout(currentLayout); // Obtiene el nombre de la pestaña actual
     
     for (int i = 0; i < currentLayout->count(); ++i) {
         QPushButton *button = qobject_cast<QPushButton*>(currentLayout->itemAt(i)->widget());
@@ -251,9 +295,24 @@ void MainWindow::duplicateSelectedButtons() {
             newButton->installEventFilter(this);
 
             currentLayout->addWidget(newButton);
+            
+            // Crea y agrega un nuevo objeto si la pestaña actual es "Teachers"
+            if (currentTabName == "Teachers") {
+                Teacher teacher(newName.toStdString());
+                teachers.push_back(teacher);
+                teacherIndices.insert(newButton, teachers.size() - 1);
+            }
+
+            // Similar logic for "Classrooms"
+            if (currentTabName == "Classrooms") {
+                Classroom classroom(newName.toStdString());
+                classrooms.push_back(classroom);
+                classroomIndices.insert(newButton, classrooms.size() - 1);
+            }
         }
     }
 }
+
 
 
 void MainWindow::buttonClicked() {
@@ -346,7 +405,7 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
     ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, 0, checkBox);
 
     for (int col = 1; col < ui->scheduleTable_CurrentSchedule->columnCount() - 1; ++col) {
-        if (col == 1 /* Ciclo */ || col == 2 /* Sigla */ || col == 3 /* Nombre */ || col == 11 /* Departamento */) {
+        if (col == 1 /* Ciclo */ || col == 2 /* Sigla */ || col == 3 /* Nombre */ || col == 8 /* Aula */ || col == 10 /* Profesor */ ||  col == 11 /* Departamento */) {
             QComboBox *comboBox = new QComboBox(this);
             comboBox->setEditable(true); // Permitir la entrada de texto
 
@@ -354,22 +413,39 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
 
             comboBox->addItem("");
 
-            for (const Curso& curso : cursos) {
-                switch (col) {
-                    case 1: // Ciclo
+            switch (col) {
+                case 1: // Ciclo
+                    for (const Curso& curso : cursos) {
                         comboBox->addItem(QString::fromStdString(curso.ciclo));
-                        break;
-                    case 2: // Sigla
+                    }
+                    break;
+                case 2: // Sigla
+                    for (const Curso& curso : cursos) {
                         comboBox->addItem(QString::fromStdString(curso.sigla));
-                        break;
-                    case 3: // Nombre
+                    }
+                    break;
+                case 3: // Nombre
+                    for (const Curso& curso : cursos) {
                         comboBox->addItem(QString::fromStdString(curso.nombre));
-                        break;
-                    case 11: // Departamento
+                    }
+                    break;
+                case 8: // Aula
+                    for (const Classroom& classroom : classrooms) {
+                        comboBox->addItem(QString::fromStdString(classroom.numeroAula)); 
+                    }
+                    break;
+                case 10: // Profesor
+                    for (const Teacher& teacher : teachers) {
+                        comboBox->addItem(QString::fromStdString(teacher.nombre)); 
+                    }
+                    break;
+                case 11: // Departamento
+                    for (const Curso& curso : cursos) {
                         comboBox->addItem(QString::fromStdString(curso.departamento));
-                        break;
-                }
+                    }
+                    break;
             }
+
             ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, col, comboBox);
         } else {
             QLineEdit *lineEdit = new QLineEdit(this);
@@ -383,6 +459,7 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
     connect(saveButton, &QPushButton::clicked, this, &MainWindow::on_saveRow_CurrentSchedule_clicked);
     ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, ui->scheduleTable_CurrentSchedule->columnCount() - 1, saveButton);
 }
+
 
 
 void MainWindow::on_comboBox_textEdited_CurrentSchedule() {
@@ -472,9 +549,18 @@ void MainWindow::on_saveRow_CurrentSchedule_clicked() {
     QString dia = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 5))->text();
     QString horainicio = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 6))->text();
     QString horafinal = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 7))->text();
-    QString aula = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 8))->text();
+
+    // Obtener texto para Aula (QComboBox)
+    QComboBox *comboAula = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 8));
+    QString aula = comboAula ? comboAula->currentText() : QString();
+
     QString cupo = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 9))->text();
-    QString profesor = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 10))->text();
+
+
+    // Obtener texto para Profesor (QComboBox)
+    QComboBox *comboProfesor = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 10));
+    QString profesor = comboProfesor ? comboProfesor->currentText() : QString();
+
 
     // Obtener texto para Departamento (QComboBox)
     QComboBox *comboDepartamento = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 11));
@@ -499,14 +585,6 @@ void MainWindow::on_saveRow_CurrentSchedule_clicked() {
         // Crear un nuevo objeto y almacenar su índice
         filas.push_back(Fila(ciclo.toStdString(), sigla.toStdString(), nombrecurso.toStdString(), grupo.toStdString(), dia.toStdString(), horainicio.toStdString(), horafinal.toStdString(), aula.toStdString(), cupo.toStdString(), profesor.toStdString(), departamento.toStdString(), observaciones.toStdString()));
         rowToIndexMap[rowToSave] = filas.size() - 1;
-    }
-
-    // Regresar color
-    for (int col = 1; col < ui->scheduleTable_CurrentSchedule->columnCount(); ++col) {
-        QWidget *cellWidget = ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, col);
-        if (cellWidget) {
-            cellWidget->setStyleSheet("background-color: none;"); // o usar "background-color: white;" si prefieres blanco específicamente
-        }
     }
 
     // Regresar color
@@ -638,10 +716,10 @@ void MainWindow::on_saveRow_Courses_clicked() {
         rowToIndexMap[rowToSave] = cursos.size() - 1;
     }
 
-    for (int col = 1; col < ui->scheduleTable_CurrentSchedule->columnCount(); ++col) {
-        QWidget *cellWidget = ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, col);
+    for (int col = 1; col < ui->scheduleTable_Courses->columnCount(); ++col) {
+        QWidget *cellWidget = ui->scheduleTable_Courses->cellWidget(rowToSave, col);
         if (cellWidget) {
-            cellWidget->setStyleSheet("background-color: none;"); // o usar "background-color: white;" si prefieres blanco específicamente
+            cellWidget->setStyleSheet("background-color: none;"); 
         }
     }
 

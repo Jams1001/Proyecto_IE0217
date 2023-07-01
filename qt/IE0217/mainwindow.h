@@ -99,8 +99,14 @@ private:
     QVBoxLayout *layout_Courses; /**< The layout for the "Courses" tab. */
     QVBoxLayout *layout_Classrooms; /**< The layout for the "Classrooms" tab. */
     bool isSelectionMode; /**< Flag indicating whether the selection mode is enabled or not. */
-    QMap<QPushButton*, Teacher> teachersMap; /**< Map to store the association between buttons and teachers. */
-    QMap<QPushButton*, Classroom> classroomsMap; /**< Map to store the association between buttons and classrooms. */
+
+
+    QMap<QPushButton*, int> teacherIndices;
+    QMap<QPushButton*, int> classroomIndices;
+
+
+    std::vector<Classroom> classrooms; /**< Vector to store the classrooms. */
+    std::vector<Teacher> teachers; /**< Vector to store the teachers. */
     std::vector<Curso> cursos; /**< Vector to store the courses. */
     std::vector<Fila> filas; /**< Vector to store the courses. */
 };

@@ -40,8 +40,6 @@ public:
 class Teacher {
 public:
     std::string nombre; /**< The teacher's name. */
-    std::string getName() const;
-
     /**
      * @brief Constructs a Teacher object.
      * @param nombre The teacher's name.
@@ -56,7 +54,6 @@ public:
 class Classroom {
 public:
     std::string numeroAula; /**< The classroom number. */
-    std::string getName() const;
 
     /**
      * @brief Constructs a Classroom object.

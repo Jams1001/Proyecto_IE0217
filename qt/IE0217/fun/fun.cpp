@@ -5,18 +5,7 @@ Curso::Curso(const std::string& ciclo, const std::string& sigla, const std::stri
 
 Teacher::Teacher(const std::string& nombre) : nombre(nombre) {}
 
-std::string Teacher::getName() const {
-    // Devuelve el nombre del profesor (asumiendo que tienes un miembro de clase que almacena el nombre)
-    return this->nombre;
-}
-
 Classroom::Classroom(const std::string& numeroAula) : numeroAula(numeroAula) {}
-
-std::string Classroom::getName() const {
-    // Devuelve el nombre del profesor (asumiendo que tienes un miembro de clase que almacena el nombre)
-    return this->numeroAula;
-}
-
 
 void Ciclo::agregarCurso(const Curso& curso) {
     cursos.push_back(curso);
@@ -28,7 +17,6 @@ Fila::Fila(const std::string& ciclo, const std::string& sigla, const std::string
     : ciclo(ciclo), sigla(sigla), nombrecurso(nombrecurso), grupo(grupo), dia(dia),
       horainicio(horainicio), horafinal(horafinal), aula(aula), cupo(cupo),
       profesor(profesor), departamento(departamento), observaciones(observaciones) {}
-
 
 void Horario::agregarFila(const Fila& fila) {
     filas.push_back(fila);
