@@ -55,6 +55,7 @@ private slots:
     void on_pushButton_HomeCl_clicked();
     void on_pushButton_HomeCu_clicked();
 
+
     // Other slots
     void connectButtons(const QString &tabName);
     void hideButtons();
@@ -66,6 +67,19 @@ private slots:
     void buttonClicked();
     QVBoxLayout* getCurrentLayout();
     QString getTabNameFromLayout(QVBoxLayout *layout);
+
+    // Tab CurrentSchedule
+    void on_addRow_CurrentSchedule_clicked();
+    void on_lineEdit_textEdited_CurrentSchedule();
+    void on_deleteSelectedRows_CurrentSchedule_clicked();
+    void on_saveRow_CurrentSchedule_clicked();
+
+    // Tab Courses
+    void on_addRow_Courses_clicked();
+    void on_comboBox_textEdited_CurrentSchedule();
+    void on_lineEdit_textEdited_Courses();
+    void on_deleteSelectedRows_Courses_clicked();
+    void on_saveRow_Courses_clicked();
 
 protected:
     /**
@@ -85,8 +99,21 @@ private:
     QVBoxLayout *layout_Courses; /**< The layout for the "Courses" tab. */
     QVBoxLayout *layout_Classrooms; /**< The layout for the "Classrooms" tab. */
     bool isSelectionMode; /**< Flag indicating whether the selection mode is enabled or not. */
-    QMap<QPushButton*, Teacher> teachersMap; /**< Map to store the association between buttons and teachers. */
-    QMap<QPushButton*, Classroom> classroomsMap; /**< Map to store the association between buttons and classrooms. */
+
+
+    // Haciendo magia - opción TEMPORAL para autocompletar y filtrar dropdowns
+    void updateCourseOptionsOnCycleOrDepartmentChange(int row, const QString &cycleOrDepartment);
+    void updateCourseOptionsOnSiglaOrNameChange(int row, const QString &siglaOrName);
+
+
+    QMap<QPushButton*, int> teacherIndices; /**< Map to store the indices of the teachers. */
+    QMap<QPushButton*, int> classroomIndices; /**< Map to store the indices of the classrooms. */
+
+
+    std::vector<Classroom> classrooms; /**< Vector to store the classrooms. */
+    std::vector<Teacher> teachers; /**< Vector to store the teachers. */
+    std::vector<Curso> cursos; /**< Vector to store the courses. */
+    std::vector<Fila> filas; /**< Vector to store the courses. */
 };
 
 #endif // MAINWINDOW_H
