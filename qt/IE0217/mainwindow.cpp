@@ -813,6 +813,14 @@ void MainWindow::on_saveRow_Courses_clicked() {
         return;
     }
 
+    // Validar que no exista un curso con la misma sigla o nombre
+    for (const Curso& curso : cursos) {
+        if (curso.sigla == sigla.toStdString() || curso.nombre == nombre.toStdString()) {
+            QMessageBox::warning(this, "Error", "Ya existe un curso con la misma sigla o nombre.");
+            return;
+        }
+    }
+
     static std::unordered_map<int, int> rowToIndexMap;
 
     // Actualizar el objeto existente o crear uno nuevo
@@ -837,7 +845,7 @@ void MainWindow::on_saveRow_Courses_clicked() {
     for (const Curso& curso : cursos) {
         qDebug()    << "Ciclo: " << QString::fromStdString(curso.ciclo)
                     << ", Sigla: " << QString::fromStdString(curso.sigla)
-                    << ", Nombre: " << QString::fromStdString(curso.nombre)
+                    <<", Nombre: " << QString::fromStdString(curso.nombre)
                     << ", Departamento: " << QString::fromStdString(curso.departamento);
     }
 }
