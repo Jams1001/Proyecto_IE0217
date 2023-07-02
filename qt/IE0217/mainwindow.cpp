@@ -513,9 +513,6 @@ void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int row, const QString& 
 }
 
 
-
-
-
 void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int row, const QString& selectedText) {
     std::set<std::string> uniqueSiglas;
     std::set<std::string> uniqueNombres;
@@ -609,22 +606,21 @@ void MainWindow::on_lineEdit_textEdited_CurrentSchedule() {
     }
 }
 
-
-// Eliminar filas seleccionadas en tab CurrentSchedule
 void MainWindow::on_deleteSelectedRows_CurrentSchedule_clicked() {
     // Recorrer las filas en reversa para evitar problemas al eliminar varias filas
     for (int row = ui->scheduleTable_CurrentSchedule->rowCount() - 1; row >= 0; --row) {
         QCheckBox *checkBox = qobject_cast<QCheckBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 0));
         if (checkBox && checkBox->isChecked()) {
-            // Eliminar el objeto Curso correspondiente de la lista de filas
-            filas.erase(filas.begin() + row);
-
+            // Verificar si el índice está dentro del rango de la lista 'filas'
+            if (row < filas.size()) {
+                // Eliminar el objeto Curso correspondiente de la lista de filas
+                filas.erase(filas.begin() + row);
+            }
             // Eliminar la fila de la tabla
             ui->scheduleTable_CurrentSchedule->removeRow(row);
         }
     }
 }
-
 
 // Guardar fila en tab CurrentSchedule
 void MainWindow::on_saveRow_CurrentSchedule_clicked() {
@@ -771,20 +767,24 @@ void MainWindow::on_lineEdit_textEdited_Courses() {
     }
 }
 
-// Eliminar filas seleccionadas en tab Courses
+
+
 void MainWindow::on_deleteSelectedRows_Courses_clicked() {
     // Recorrer las filas en reversa para evitar problemas al eliminar varias filas
     for (int row = ui->scheduleTable_Courses->rowCount() - 1; row >= 0; --row) {
         QCheckBox *checkBox = qobject_cast<QCheckBox*>(ui->scheduleTable_Courses->cellWidget(row, 0));
         if (checkBox && checkBox->isChecked()) {
-            // Eliminar el objeto Curso correspondiente de la lista de cursos
-            cursos.erase(cursos.begin() + row);
-
+            // Verificar si el índice está dentro del rango de la lista 'filas'
+            if (row < filas.size()) {
+                // Eliminar el objeto Curso correspondiente de la lista de filas
+                filas.erase(filas.begin() + row);
+            }
             // Eliminar la fila de la tabla
             ui->scheduleTable_Courses->removeRow(row);
         }
     }
 }
+
 
 
 // Guardar fila en tab Courses
