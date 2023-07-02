@@ -12,12 +12,12 @@ void Ciclo::agregarCurso(const Curso& curso) {
 }
 
 Fila::Fila(const std::string& ciclo, const std::string& sigla, const std::string& nombrecurso, const std::string& grupo,
-           const std::string& dia, const std::string& horainicio, const std::string& horafinal, const std::string& aula, const std::string& cupo,
+           const std::vector<Horario>& horarios, const std::string& aula, const std::string& cupo,
            const std::string& profesor, const std::string& departamento, const std::string& observaciones)
-    : ciclo(ciclo), sigla(sigla), nombrecurso(nombrecurso), grupo(grupo), dia(dia),
-      horainicio(horainicio), horafinal(horafinal), aula(aula), cupo(cupo),
-      profesor(profesor), departamento(departamento), observaciones(observaciones) {}
+    : ciclo(ciclo), sigla(sigla), nombrecurso(nombrecurso), grupo(grupo), horarios(horarios),
+      aula(aula), cupo(cupo), profesor(profesor), departamento(departamento), observaciones(observaciones) {}
 
-void Horario::agregarFila(const Fila& fila) {
+
+void Guia::agregarFila(const Fila& fila) {
     filas.push_back(fila);
 }

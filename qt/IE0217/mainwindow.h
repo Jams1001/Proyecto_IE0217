@@ -69,17 +69,17 @@ private slots:
     QString getTabNameFromLayout(QVBoxLayout *layout);
 
     // Tab CurrentSchedule
-    void on_addRow_CurrentSchedule_clicked();
-    void on_lineEdit_textEdited_CurrentSchedule();
-    void on_deleteSelectedRows_CurrentSchedule_clicked();
-    void on_saveRow_CurrentSchedule_clicked();
+    void addRowToCurrentSchedule();
+    void editTextInCurrentSchedule();
+    void deleteSelectedRowsInCurrentSchedule();
+    void saveRowInCurrentSchedule();
 
     // Tab Courses
-    void on_addRow_Courses_clicked();
-    void on_comboBox_textEdited_CurrentSchedule();
-    void on_lineEdit_textEdited_Courses();
-    void on_deleteSelectedRows_Courses_clicked();
-    void on_saveRow_Courses_clicked();
+    void addRowToCourses();
+    void editComboBoxTextInCurrentSchedule();
+    void editTextInCourses();
+    void deleteSelectedRowsInCourses();
+    void saveRowInCourses();
 
 protected:
     /**

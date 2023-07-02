@@ -78,6 +78,32 @@ public:
     void agregarCurso(const Curso& curso);
 };
 
+
+class Horario {
+public:
+    std::string dia;         /**< The day of the week (e.g., "L", "M", "K", etc.). */
+    std::string horaInicio;  /**< The start time of the class (e.g., "09:00"). */
+    std::string horaFinal;   /**< The end time of the class (e.g., "11:50"). */
+
+    /**
+     * @brief Constructs a Horario object.
+     * @param dia The day of the week.
+     * @param horaInicio The start time of the class.
+     * @param horaFinal The end time of the class.
+     */
+    Horario(const std::string& dia, const std::string& horaInicio, const std::string& horaFinal)
+        : dia(dia), horaInicio(horaInicio), horaFinal(horaFinal) {}
+
+    /**
+     * @brief Returns a formatted string representing the schedule.
+     * @return A string in the format "D: HH:MM a HH:MM".
+     */
+    std::string formatear() const {
+        return dia + ": " + horaInicio + " a " + horaFinal;
+    }
+};
+
+
 /**
  * @class Fila
  * @brief Represents a row in a schedule.
@@ -88,9 +114,7 @@ public:
     std::string sigla; /**< The course code. */
     std::string nombrecurso; /**< The course name. */
     std::string grupo; /**< The course group. */
-    std::string dia; /**< The day of the week. */
-    std::string horainicio; /**< The start time of the class. */
-    std::string horafinal; /**< The end time of the class. */
+    std::vector<Horario> horarios; /**< The schedules of the class. */
     std::string aula; /**< The classroom number. */
     std::string cupo; /**< The class capacity. */
     std::string profesor; /**< The teacher's name. */
@@ -103,9 +127,7 @@ public:
      * @param sigla The course code.
      * @param nombrecurso The course name.
      * @param grupo The course group.
-     * @param dia The day of the week.
-     * @param horainicio The start time of the class.
-     * @param horafinal The end time of the class.
+     * @param horarios The schedules of the class.
      * @param aula The classroom number.
      * @param cupo The class capacity.
      * @param profesor The teacher's name.
@@ -113,15 +135,17 @@ public:
      * @param observaciones Additional observations.
      */
     Fila(const std::string& ciclo, const std::string& sigla, const std::string& nombrecurso, const std::string& grupo,
-         const std::string& dia, const std::string& horainicio, const std::string& horafinal, const std::string& aula, const std::string& cupo,
+         const std::vector<Horario>& horarios, const std::string& aula, const std::string& cupo,
          const std::string& profesor, const std::string& departamento, const std::string& observaciones);
 };
 
+
+
 /**
- * @class Horario
+ * @class Guia
  * @brief Represents a schedule.
  */
-class Horario {
+class Guia {
 public:
     std::vector<Fila> filas; /**< The rows in the schedule. */
 

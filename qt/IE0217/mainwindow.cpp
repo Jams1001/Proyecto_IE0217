@@ -29,18 +29,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollAreaWidget_Classrooms->setLayout(layout_Classrooms);
 
     // Tabla CurrentSchedule
-    QStringList headers_CurrentSchedule = {"Select", "Ciclo", "Sigla", "Nombre", "G", "Día", "horaInicio", "horaFinal", "Aula", "Cupo", "Profesor", "Dept", "Observaciones", "Acción"};
+    QStringList headers_CurrentSchedule = {"Select", "Ciclo", "Sigla", "Nombre", "G", "Horario", "Aula", "Cupo", "Profesor", "Dept", "Observaciones", "Acción"};
     ui->scheduleTable_CurrentSchedule->setColumnCount(headers_CurrentSchedule.size());
     ui->scheduleTable_CurrentSchedule->setHorizontalHeaderLabels(headers_CurrentSchedule);
-    connect(ui->pushButtonAdd_CurrentSchedule, &QPushButton::clicked, this, &MainWindow::on_addRow_CurrentSchedule_clicked);
-    connect(ui->pushButtonRemove_CurrentSchedule, &QPushButton::clicked, this, &MainWindow::on_deleteSelectedRows_CurrentSchedule_clicked);
+    connect(ui->pushButtonAdd_CurrentSchedule, &QPushButton::clicked, this, &MainWindow::addRowToCurrentSchedule);
+    connect(ui->pushButtonRemove_CurrentSchedule, &QPushButton::clicked, this, &MainWindow::deleteSelectedRowsInCurrentSchedule);
 
     // Tabla Courses
     QStringList headers_Courses = {"Select", "Ciclo", "Sigla", "Nombre", "Departamento", "Acción"};
     ui->scheduleTable_Courses->setColumnCount(headers_Courses.size());
     ui->scheduleTable_Courses->setHorizontalHeaderLabels(headers_Courses);
-    connect(ui->pushButtonAdd_Courses, &QPushButton::clicked, this, &MainWindow::on_addRow_Courses_clicked);
-    connect(ui->pushButtonRemove_Courses, &QPushButton::clicked, this, &MainWindow::on_deleteSelectedRows_Courses_clicked);
+    connect(ui->pushButtonAdd_Courses, &QPushButton::clicked, this, &MainWindow::addRowToCourses);
+    connect(ui->pushButtonRemove_Courses, &QPushButton::clicked, this, &MainWindow::deleteSelectedRowsInCourses);
 
 
 
@@ -397,7 +397,7 @@ QString MainWindow::getTabNameFromLayout(QVBoxLayout *layout) {
 
 
 
-void MainWindow::on_addRow_CurrentSchedule_clicked() {
+void MainWindow::addRowToCurrentSchedule() {
     int newRow = ui->scheduleTable_CurrentSchedule->rowCount();
     ui->scheduleTable_CurrentSchedule->insertRow(newRow);
 
@@ -406,11 +406,11 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
     ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, 0, checkBox);
 
     for (int col = 1; col < ui->scheduleTable_CurrentSchedule->columnCount() - 1; ++col) {
-        if (col == 1 /* Ciclo */ || col == 2 /* Sigla */ || col == 3 /* Nombre */ || col == 8 /* Aula */ || col == 10 /* Profesor */ ||  col == 11 /* Departamento */) {
+        if (col == 1 /* Ciclo */ || col == 2 /* Sigla */ || col == 3 /* Nombre */ || col == 6 /* Aula */ || col == 8 /* Profesor */ ||  col == 9 /* Departamento */) {
             QComboBox *comboBox = new QComboBox(this);
             comboBox->setEditable(true); // Permitir la entrada de texto
 
-            connect(comboBox, &QComboBox::currentTextChanged, this, &MainWindow::on_comboBox_textEdited_CurrentSchedule); // Edición de texto, color
+            connect(comboBox, &QComboBox::currentTextChanged, this, &MainWindow::editComboBoxTextInCurrentSchedule); // Edición de texto, color
 
             comboBox->addItem("");
 
@@ -440,17 +440,17 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
                         comboBox->addItem(QString::fromStdString(curso.nombre));
                     }
                     break;
-                case 8: // Aula
+                case 6: // Aula
                     for (const Classroom& classroom : classrooms) {
                         comboBox->addItem(QString::fromStdString(classroom.numeroAula));
                     }
                     break;
-                case 10: // Profesor
+                case 8: // Profesor
                     for (const Teacher& teacher : teachers) {
                         comboBox->addItem(QString::fromStdString(teacher.nombre));
                     }
                     break;
-                case 11: // Departamento
+                case 9: // Departamento
                     for (const Curso& curso : cursos) {
                         comboBox->addItem(QString::fromStdString(curso.departamento));
                     }
@@ -460,14 +460,14 @@ void MainWindow::on_addRow_CurrentSchedule_clicked() {
             ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, col, comboBox);
         } else {
             QLineEdit *lineEdit = new QLineEdit(this);
-            connect(lineEdit, &QLineEdit::textEdited, this, &MainWindow::on_lineEdit_textEdited_CurrentSchedule);
+            connect(lineEdit, &QLineEdit::textEdited, this, &MainWindow::editTextInCurrentSchedule);
             ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, col, lineEdit);
         }
     }
 
     // Columna de botón Guardar
     QPushButton *saveButton = new QPushButton("Guardar", this);
-    connect(saveButton, &QPushButton::clicked, this, &MainWindow::on_saveRow_CurrentSchedule_clicked);
+    connect(saveButton, &QPushButton::clicked, this, &MainWindow::saveRowInCurrentSchedule);
     ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, ui->scheduleTable_CurrentSchedule->columnCount() - 1, saveButton);
 }
 
@@ -569,7 +569,7 @@ void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int row, const QSt
 
 
 
-void MainWindow::on_comboBox_textEdited_CurrentSchedule() {
+void MainWindow::editComboBoxTextInCurrentSchedule() {
     // Aquí, cambia el color de fondo de la celda del QComboBox a amarillo
     QComboBox* comboBoxSender = qobject_cast<QComboBox*>(sender());
     if (comboBoxSender) {
@@ -579,7 +579,7 @@ void MainWindow::on_comboBox_textEdited_CurrentSchedule() {
 
 
 // Edición de fila en tab CurrentSchedule
-void MainWindow::on_lineEdit_textEdited_CurrentSchedule() {
+void MainWindow::editTextInCurrentSchedule() {
     QLineEdit* lineEditSender = qobject_cast<QLineEdit*>(sender());
     if (!lineEditSender) return;
 
@@ -606,7 +606,7 @@ void MainWindow::on_lineEdit_textEdited_CurrentSchedule() {
     }
 }
 
-void MainWindow::on_deleteSelectedRows_CurrentSchedule_clicked() {
+void MainWindow::deleteSelectedRowsInCurrentSchedule() {
     // Recorrer las filas en reversa para evitar problemas al eliminar varias filas
     for (int row = ui->scheduleTable_CurrentSchedule->rowCount() - 1; row >= 0; --row) {
         QCheckBox *checkBox = qobject_cast<QCheckBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 0));
@@ -623,7 +623,7 @@ void MainWindow::on_deleteSelectedRows_CurrentSchedule_clicked() {
 }
 
 // Guardar fila en tab CurrentSchedule
-void MainWindow::on_saveRow_CurrentSchedule_clicked() {
+void MainWindow::saveRowInCurrentSchedule() {
     QPushButton* buttonSender = qobject_cast<QPushButton*>(sender());
     if (!buttonSender) return;
 
@@ -652,30 +652,53 @@ void MainWindow::on_saveRow_CurrentSchedule_clicked() {
     QString nombrecurso = comboNombre ? comboNombre->currentText() : QString();
 
     QString grupo = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 4))->text();
-    QString dia = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 5))->text();
-    QString horainicio = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 6))->text();
-    QString horafinal = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 7))->text();
+
+
+
+    QString horarioc = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 5))->text();
+
+    // Dividir el texto de horarioc usando 'y' como separador
+    QStringList horarioSegments = horarioc.split("y", QString::SkipEmptyParts);
+
+    // Interpretar cada segmento y crear objetos Horario
+    std::vector<Horario> horarios;
+    QRegularExpression horarioRegex(R"(([A-Z]): (\d{2}:\d{2}) a (\d{2}:\d{2}))");
+
+    for (const QString &segment : horarioSegments) {
+        QRegularExpressionMatch match = horarioRegex.match(segment.trimmed());
+
+        if (match.hasMatch()) {
+            QString dia = match.captured(1);
+            QString horaInicio = match.captured(2);
+            QString horaFinal = match.captured(3);
+
+            // Crear el objeto Horario y agregarlo a horarios
+            horarios.push_back(Horario(dia.toStdString(), horaInicio.toStdString(), horaFinal.toStdString()));
+        } else {
+            QMessageBox::warning(this, "Error", "El formato del horario es incorrecto. L: 18:00 a 21:50 y M: 18:00 a 21:50 es un formato de horario válido, por ejemplo.");
+            return;
+        }
+    }
 
     // Obtener texto para Aula (QComboBox)
-    QComboBox *comboAula = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 8));
+    QComboBox *comboAula = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 6));
     QString aula = comboAula ? comboAula->currentText() : QString();
 
-    QString cupo = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 9))->text();
-
+    QString cupo = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 7))->text();
 
     // Obtener texto para Profesor (QComboBox)
-    QComboBox *comboProfesor = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 10));
+    QComboBox *comboProfesor = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 8));
     QString profesor = comboProfesor ? comboProfesor->currentText() : QString();
 
 
     // Obtener texto para Departamento (QComboBox)
-    QComboBox *comboDepartamento = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 11));
+    QComboBox *comboDepartamento = qobject_cast<QComboBox*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 9));
     QString departamento = comboDepartamento ? comboDepartamento->currentText() : QString();
 
-    QString observaciones = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 12))->text();
+    QString observaciones = qobject_cast<QLineEdit*>(ui->scheduleTable_CurrentSchedule->cellWidget(rowToSave, 10))->text();
 
     // Validar que las celdas no estén vacías
-    if (ciclo.isEmpty() || sigla.isEmpty() || nombrecurso.isEmpty() || grupo.isEmpty() || dia.isEmpty() || horainicio.isEmpty() || horafinal.isEmpty() || aula.isEmpty() || cupo.isEmpty() || profesor.isEmpty() || departamento.isEmpty() || observaciones.isEmpty()) {
+    if (ciclo.isEmpty() || sigla.isEmpty() || nombrecurso.isEmpty() || grupo.isEmpty() || horarioc.isEmpty() || aula.isEmpty() || cupo.isEmpty() || profesor.isEmpty() || departamento.isEmpty() || observaciones.isEmpty()) {
         QMessageBox::warning(this, "Error", "Campos vacíos.");
         return;
     }
@@ -686,12 +709,13 @@ void MainWindow::on_saveRow_CurrentSchedule_clicked() {
     if (rowToIndexMap.find(rowToSave) != rowToIndexMap.end()) {
         // Actualizar el objeto existente
         int indexInFilas = rowToIndexMap[rowToSave];
-        filas[indexInFilas] = Fila(ciclo.toStdString(), sigla.toStdString(), nombrecurso.toStdString(), grupo.toStdString(), dia.toStdString(), horainicio.toStdString(), horafinal.toStdString(), aula.toStdString(), cupo.toStdString(), profesor.toStdString(), departamento.toStdString(), observaciones.toStdString());
+        filas[indexInFilas] = Fila(ciclo.toStdString(), sigla.toStdString(), nombrecurso.toStdString(), grupo.toStdString(), horarios, aula.toStdString(), cupo.toStdString(), profesor.toStdString(), departamento.toStdString(), observaciones.toStdString());
     } else {
         // Crear un nuevo objeto y almacenar su índice
-        filas.push_back(Fila(ciclo.toStdString(), sigla.toStdString(), nombrecurso.toStdString(), grupo.toStdString(), dia.toStdString(), horainicio.toStdString(), horafinal.toStdString(), aula.toStdString(), cupo.toStdString(), profesor.toStdString(), departamento.toStdString(), observaciones.toStdString()));
+        filas.push_back(Fila(ciclo.toStdString(), sigla.toStdString(), nombrecurso.toStdString(), grupo.toStdString(), horarios, aula.toStdString(), cupo.toStdString(), profesor.toStdString(), departamento.toStdString(), observaciones.toStdString()));
         rowToIndexMap[rowToSave] = filas.size() - 1;
     }
+
 
     // Regresar color
     for (int col = 1; col < ui->scheduleTable_CurrentSchedule->columnCount(); ++col) {
@@ -701,28 +725,41 @@ void MainWindow::on_saveRow_CurrentSchedule_clicked() {
         }
     }
 
-
     // Imprimir el contenido de todos los objetos Fila en terminal
     for (const Fila& fila : filas) {
-        qDebug()    << "Ciclo: " << QString::fromStdString(fila.ciclo)
-                    << ", Sigla: " << QString::fromStdString(fila.sigla)
-                    << ", Nombre: " << QString::fromStdString(fila.nombrecurso)
-                    << ", Departamento: " << QString::fromStdString(fila.grupo)
-                    << ", Dia: " << QString::fromStdString(fila.dia)
-                    << ", Hora Inicio: " << QString::fromStdString(fila.horainicio)
-                    << ", Hora Final: " << QString::fromStdString(fila.horafinal)
-                    << ", Aula: " << QString::fromStdString(fila.aula)
-                    << ", Cupo: " << QString::fromStdString(fila.cupo)
-                    << ", Profesor: " << QString::fromStdString(fila.profesor)
-                    << ", Departamento: " << QString::fromStdString(fila.departamento)
-                    << ", Observaciones: " << QString::fromStdString(fila.observaciones);
+        QString horarioStr;
+        
+        // Iterar sobre el vector de Horario y construir una cadena
+        for (const Horario& horario : fila.horarios) {
+            horarioStr += QString("%1: %2 a %3, ")
+                    .arg(QString::fromStdString(horario.dia))
+                    .arg(QString::fromStdString(horario.horaInicio))
+                    .arg(QString::fromStdString(horario.horaFinal));
+        }
+        
+        // Remover la última coma y espacio
+        if (!horarioStr.isEmpty()) {
+            horarioStr.chop(2);
+        }
+
+        // Imprimir la fila
+        qDebug() << "Ciclo: " << QString::fromStdString(fila.ciclo)
+                 << ", Sigla: " << QString::fromStdString(fila.sigla)
+                 << ", Nombre: " << QString::fromStdString(fila.nombrecurso)
+                 << ", Grupo: " << QString::fromStdString(fila.grupo)
+                 << ", Horario: " << horarioStr
+                 << ", Aula: " << QString::fromStdString(fila.aula)
+                 << ", Cupo: " << QString::fromStdString(fila.cupo)
+                 << ", Profesor: " << QString::fromStdString(fila.profesor)
+                 << ", Departamento: " << QString::fromStdString(fila.departamento)
+                 << ", Observaciones: " << QString::fromStdString(fila.observaciones);
     }
 }
 
 
 
 // Para tab Courses
-void MainWindow::on_addRow_Courses_clicked() {
+void MainWindow::addRowToCourses() {
     int newRow = ui->scheduleTable_Courses->rowCount();
     ui->scheduleTable_Courses->insertRow(newRow);
 
@@ -732,18 +769,18 @@ void MainWindow::on_addRow_Courses_clicked() {
 
     for (int col = 1; col < ui->scheduleTable_Courses->columnCount() - 1; ++col) {
         QLineEdit *lineEdit = new QLineEdit(this);
-        connect(lineEdit, &QLineEdit::textEdited, this, &MainWindow::on_lineEdit_textEdited_Courses);
+        connect(lineEdit, &QLineEdit::textEdited, this, &MainWindow::editTextInCourses);
         ui->scheduleTable_Courses->setCellWidget(newRow, col, lineEdit);
     }
 
     // Columna de botón Guardar
     QPushButton *saveButton = new QPushButton("Guardar", this);
-    connect(saveButton, &QPushButton::clicked, this, &MainWindow::on_saveRow_Courses_clicked);
+    connect(saveButton, &QPushButton::clicked, this, &MainWindow::saveRowInCourses);
     ui->scheduleTable_Courses->setCellWidget(newRow, ui->scheduleTable_Courses->columnCount() - 1, saveButton);
 }
 
 // Edición de fila en tab Courses
-void MainWindow::on_lineEdit_textEdited_Courses() {
+void MainWindow::editTextInCourses() {
     QLineEdit* lineEditSender = qobject_cast<QLineEdit*>(sender());
     if (!lineEditSender) return;
 
@@ -769,7 +806,7 @@ void MainWindow::on_lineEdit_textEdited_Courses() {
 
 
 
-void MainWindow::on_deleteSelectedRows_Courses_clicked() {
+void MainWindow::deleteSelectedRowsInCourses() {
     // Recorrer las filas en reversa para evitar problemas al eliminar varias filas
     for (int row = ui->scheduleTable_Courses->rowCount() - 1; row >= 0; --row) {
         QCheckBox *checkBox = qobject_cast<QCheckBox*>(ui->scheduleTable_Courses->cellWidget(row, 0));
@@ -788,7 +825,7 @@ void MainWindow::on_deleteSelectedRows_Courses_clicked() {
 
 
 // Guardar fila en tab Courses
-void MainWindow::on_saveRow_Courses_clicked() {
+void MainWindow::saveRowInCourses() {
     QPushButton* buttonSender = qobject_cast<QPushButton*>(sender());
     if (!buttonSender) return;
 
