@@ -406,7 +406,7 @@ void MainWindow::addRowToCurrentSchedule() {
     ui->scheduleTable_CurrentSchedule->setCellWidget(newRow, 0, checkBox);
 
     for (int col = 1; col < ui->scheduleTable_CurrentSchedule->columnCount() - 1; ++col) {
-        if (col == 1 /* Ciclo */ || col == 2 /* Sigla */ || col == 3 /* Nombre */ || col == 6 /* Aula */ || col == 8 /* Profesor */ ||  col == 9 /* Departamento */) {
+        if (col == 1 /* Cclo */ || col == 2 /* Sgla */ || col == 3 /* Nomb */ || col == 6 /* Aula */ || col == 8 /* Prof */ ||  col == 9 /* Dpt */) {
             QComboBox *comboBox = new QComboBox(this);
             comboBox->setEditable(true); // Permitir la entrada de texto
 
@@ -415,13 +415,9 @@ void MainWindow::addRowToCurrentSchedule() {
             comboBox->addItem("");
 
             if (col == 1 /* Ciclo */ || col == 11 /* Departamento */) {
-                connect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), [this, comboBox, newRow](const QString &text) {
-                    updateCourseOptionsOnCycleOrDepartmentChange(newRow, text);
-                });
+                connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
             } else if (col == 2 /* Sigla */ || col == 3 /* Nombre */) {
-                connect(comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), [this, comboBox, newRow](const QString &text) {
-                    updateCourseOptionsOnSiglaOrNameChange(newRow, text);
-                });
+                connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
             }
 
             switch (col) {
@@ -476,7 +472,12 @@ void MainWindow::addRowToCurrentSchedule() {
 
 
 // Algo que probablemente no sea tan necesario cuando separe los ciclos de los cursos como objetos contenedores (porque será más fácil). Para el proyecto se propone como beta
-void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int row, const QString& selectedText) {
+void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int index) {
+    QComboBox *combo = qobject_cast<QComboBox *>(sender());
+    if (!combo) return;
+
+    QString selectedText = combo->currentText();
+
     if (selectedText.isEmpty()) return; // Si la selección es vacía, retorno
 
     Curso selectedCourse("", "", "", "");
@@ -492,15 +493,18 @@ void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int row, const QString& 
 
     if (!isFound) return; // Si no se encontró el curso, retorno también
 
+    // Get the row index of the combo box
+    int rowIndex = ui->scheduleTable_CurrentSchedule->indexAt(combo->pos()).row();
+
     // Ahora actualizamos los combos en la fila especificada.
-    QComboBox *cicloCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 1));
-    QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 2));
-    QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 3));
-    QComboBox *departamentoCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 11));
+    QComboBox *cicloCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 1));
+    QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 2));
+    QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 3));
+    QComboBox *departamentoCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 11));
 
     // Desconectamos las señales temporalmente para evitar un ciclo infinito de actualizaciones
-    disconnect(cicloCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
-    disconnect(departamentoCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
+    disconnect(cicloCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
+    disconnect(departamentoCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
 
     cicloCombo->setCurrentText(QString::fromStdString(selectedCourse.ciclo));
     siglaCombo->setCurrentText(QString::fromStdString(selectedCourse.sigla));
@@ -508,12 +512,17 @@ void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int row, const QString& 
     departamentoCombo->setCurrentText(QString::fromStdString(selectedCourse.departamento));
 
     // Reconectamos las señales
-    connect(cicloCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
-    connect(departamentoCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int, const QString&)));
+    connect(cicloCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
+    connect(departamentoCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
 }
 
 
-void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int row, const QString& selectedText) {
+void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int index) {
+    QComboBox *combo = qobject_cast<QComboBox *>(sender());
+    if (!combo) return;
+
+    QString selectedText = combo->currentText();
+
     std::set<std::string> uniqueSiglas;
     std::set<std::string> uniqueNombres;
 
@@ -524,12 +533,15 @@ void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int row, const QSt
         }
     }
 
-    QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 2));
-    QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(row, 3));
+    // Get the row index of the combo box
+    int rowIndex = ui->scheduleTable_CurrentSchedule->indexAt(combo->pos()).row();
+
+    QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 2));
+    QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 3));
 
     // Desconectamos las señales temporalmente para evitar un ciclo infinito de actualizaciones.
-    disconnect(siglaCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
-    disconnect(nombreCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
+    disconnect(siglaCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
+    disconnect(nombreCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
 
     // Limpiamos y re-llenamos los combos de Sigla y Nombre.
     siglaCombo->clear();
@@ -544,9 +556,10 @@ void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int row, const QSt
     }
 
     // Reconectamos las señales.
-    connect(siglaCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
-    connect(nombreCombo, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int, const QString&)));
+    connect(siglaCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
+    connect(nombreCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
 }
+
 
 
 
@@ -850,15 +863,21 @@ void MainWindow::saveRowInCourses() {
         return;
     }
 
+    static std::unordered_map<int, int> rowToIndexMap;
+
     // Validar que no exista un curso con la misma sigla o nombre
-    for (const Curso& curso : cursos) {
-        if (curso.sigla == sigla.toStdString() || curso.nombre == nombre.toStdString()) {
+    int indexInCursos = -1;
+    if (rowToIndexMap.find(rowToSave) != rowToIndexMap.end()) {
+        indexInCursos = rowToIndexMap[rowToSave];
+    }
+
+    for (int i = 0; i < cursos.size(); ++i) {
+        const Curso& curso = cursos[i];
+        if ((curso.sigla == sigla.toStdString() || curso.nombre == nombre.toStdString()) && i != indexInCursos) {
             QMessageBox::warning(this, "Error", "Ya existe un curso con la misma sigla o nombre.");
             return;
         }
     }
-
-    static std::unordered_map<int, int> rowToIndexMap;
 
     // Actualizar el objeto existente o crear uno nuevo
     if (rowToIndexMap.find(rowToSave) != rowToIndexMap.end()) {

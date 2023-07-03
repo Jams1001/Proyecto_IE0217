@@ -38,6 +38,38 @@ public:
      */
     ~MainWindow();
 
+//public slots:
+//    // Haciendo magia - opción TEMPORAL para autocompletar y filtrar dropdowns
+//    void updateCourseOptionsOnCycleOrDepartmentChange(int index);
+//    void updateCourseOptionsOnSiglaOrNameChange(int index);
+
+protected:
+    /**
+     * @brief Filters events that occur in the watched object.
+     * @param watched The object that is being watched.
+     * @param event The event that occurred.
+     * @return True if the event was handled, False otherwise.
+     */
+    bool eventFilter(QObject *watched, QEvent *event);
+
+private:
+    Ui::MainWindow *ui; /**< The user interface object. */
+    QVBoxLayout *layout_Semesters; /**< The layout for the "Semesters" tab. */
+    QVBoxLayout *layout_Teachers; /**< The layout for the "Teachers" tab. */
+    QVBoxLayout *layout_ExternalCourses; /**< The layout for the "ExternalCourses" tab. */
+    QVBoxLayout *layout_Cycles; /**< The layout for the "Cycles" tab. */
+    QVBoxLayout *layout_Courses; /**< The layout for the "Courses" tab. */
+    QVBoxLayout *layout_Classrooms; /**< The layout for the "Classrooms" tab. */
+    bool isSelectionMode; /**< Flag indicating whether the selection mode is enabled or not. */
+
+    QMap<QPushButton*, int> teacherIndices; /**< Map to store the indices of the teachers. */
+    QMap<QPushButton*, int> classroomIndices; /**< Map to store the indices of the classrooms. */
+
+    std::vector<Classroom> classrooms; /**< Vector to store the classrooms. */
+    std::vector<Teacher> teachers; /**< Vector to store the teachers. */
+    std::vector<Curso> cursos; /**< Vector to store the courses. */
+    std::vector<Fila> filas; /**< Vector to store the courses. */
+
 private slots:
     // Slots for button clicks
     void on_pushButtonSemesters_clicked();
@@ -54,7 +86,6 @@ private slots:
     void on_pushButton_HomeCo_clicked();
     void on_pushButton_HomeCl_clicked();
     void on_pushButton_HomeCu_clicked();
-
 
     // Other slots
     void connectButtons(const QString &tabName);
@@ -81,39 +112,8 @@ private slots:
     void deleteSelectedRowsInCourses();
     void saveRowInCourses();
 
-protected:
-    /**
-     * @brief Filters events that occur in the watched object.
-     * @param watched The object that is being watched.
-     * @param event The event that occurred.
-     * @return True if the event was handled, False otherwise.
-     */
-    bool eventFilter(QObject *watched, QEvent *event);
-
-private:
-    Ui::MainWindow *ui; /**< The user interface object. */
-    QVBoxLayout *layout_Semesters; /**< The layout for the "Semesters" tab. */
-    QVBoxLayout *layout_Teachers; /**< The layout for the "Teachers" tab. */
-    QVBoxLayout *layout_ExternalCourses; /**< The layout for the "ExternalCourses" tab. */
-    QVBoxLayout *layout_Cycles; /**< The layout for the "Cycles" tab. */
-    QVBoxLayout *layout_Courses; /**< The layout for the "Courses" tab. */
-    QVBoxLayout *layout_Classrooms; /**< The layout for the "Classrooms" tab. */
-    bool isSelectionMode; /**< Flag indicating whether the selection mode is enabled or not. */
-
-
-    // Haciendo magia - opción TEMPORAL para autocompletar y filtrar dropdowns
-    void updateCourseOptionsOnCycleOrDepartmentChange(int row, const QString &cycleOrDepartment);
-    void updateCourseOptionsOnSiglaOrNameChange(int row, const QString &siglaOrName);
-
-
-    QMap<QPushButton*, int> teacherIndices; /**< Map to store the indices of the teachers. */
-    QMap<QPushButton*, int> classroomIndices; /**< Map to store the indices of the classrooms. */
-
-
-    std::vector<Classroom> classrooms; /**< Vector to store the classrooms. */
-    std::vector<Teacher> teachers; /**< Vector to store the teachers. */
-    std::vector<Curso> cursos; /**< Vector to store the courses. */
-    std::vector<Fila> filas; /**< Vector to store the courses. */
+    void updateCourseOptionsOnCycleOrDepartmentChange(int index);
+    void updateCourseOptionsOnSiglaOrNameChange(int index);
 };
 
 #endif // MAINWINDOW_H
