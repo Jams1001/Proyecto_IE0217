@@ -47,7 +47,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>8</number>
     </property>
     <widget class="QWidget" name="Home">
      <widget class="QLabel" name="label_EIE">
@@ -1865,6 +1865,149 @@ border-radius: 20px;</string>
         <height>381</height>
        </rect>
       </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="ScheduleGenerator">
+     <widget class="QPushButton" name="pushButtonAddCSV_ScheduleGenerator">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(76, 0, 255);
+color: rgb(255, 255, 255);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Add CSV</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonPrintCSV_ScheduleGenerator">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>450</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(245, 121, 0);
+color: rgb(255, 255, 255);
+border-radius: 20px;</string>
+      </property>
+      <property name="text">
+       <string>Print CSV</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_6">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>781</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(136, 138, 133);
+border-style: solid;
+border-bottom-color: rgb(100, 100, 103);
+border-width: 0px 0px 1px 0px;
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QFrame" name="frame_18">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>761</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">    border-style: solid;
+    border-color: rgb(100, 100, 103);
+    border-width: 1px 1px 1px 1px;
+border-radius: 4px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="pushButton_HomeSG">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>51</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>89</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent; 
+border: none;</string>
+        </property>
+        <property name="text">
+         <string>Home</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_ScheduleGenerator">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>0</y>
+          <width>141</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent; 
+border: none;</string>
+        </property>
+        <property name="text">
+         <string>/ Schedule generator</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
    </widget>

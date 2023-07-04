@@ -79,6 +79,7 @@ private slots:
     void on_pushButtonCourses_clicked();
     void on_pushButtonClassrooms_clicked();
     void on_pushButtonCurrentSchedule_clicked();
+    void on_pushButtonScheduleGenerator_clicked();
     void on_pushButton_HomeS_clicked();
     void on_pushButton_HomeT_clicked();
     void on_pushButton_HomeEC_clicked();
@@ -86,6 +87,7 @@ private slots:
     void on_pushButton_HomeCo_clicked();
     void on_pushButton_HomeCl_clicked();
     void on_pushButton_HomeCu_clicked();
+    void on_pushButton_HomeSG_clicked();
 
     // Other slots
     void connectButtons(const QString &tabName);
@@ -96,6 +98,7 @@ private slots:
     void removeSelectedButtons();
     void duplicateSelectedButtons();
     void buttonClicked();
+
     QVBoxLayout* getCurrentLayout();
     QString getTabNameFromLayout(QVBoxLayout *layout);
 
@@ -114,6 +117,11 @@ private slots:
 
     void updateCourseOptionsOnCycleOrDepartmentChange(int index);
     void updateCourseOptionsOnSiglaOrNameChange(int index);
+
+
+    // Shcedule Generator
+    void on_pushButtonAddCSV_ScheduleGenerator_clicked();
+
 };
 
 #endif // MAINWINDOW_H

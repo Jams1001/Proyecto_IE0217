@@ -9,6 +9,8 @@
 #include <QCheckBox>
 #include <set>
 #include <QDebug>
+#include <QFileDialog>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -54,6 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     // Ocultar botones al inicio
     hideButtons();
 
+    // Botón para addCSV
+    connect(ui->pushButtonAddCSV_ScheduleGenerator, &QPushButton::clicked, this, &MainWindow::on_pushButtonAddCSV_ScheduleGenerator_clicked);
+
 }
 
 MainWindow::~MainWindow() {
@@ -68,6 +73,7 @@ void MainWindow::on_pushButtonCycles_clicked(){ui->stackedWidget->setCurrentInde
 void MainWindow::on_pushButtonCourses_clicked(){ui->stackedWidget->setCurrentIndex(5);}
 void MainWindow::on_pushButtonClassrooms_clicked(){ui->stackedWidget->setCurrentIndex(6);}
 void MainWindow::on_pushButtonCurrentSchedule_clicked(){ui->stackedWidget->setCurrentIndex(7);}
+void MainWindow::on_pushButtonScheduleGenerator_clicked(){ui->stackedWidget->setCurrentIndex(8);}
 void MainWindow::on_pushButton_HomeS_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeT_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeEC_clicked(){ui->stackedWidget->setCurrentIndex(0);}
@@ -75,6 +81,7 @@ void MainWindow::on_pushButton_HomeCy_clicked(){ui->stackedWidget->setCurrentInd
 void MainWindow::on_pushButton_HomeCo_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCl_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 void MainWindow::on_pushButton_HomeCu_clicked(){ui->stackedWidget->setCurrentIndex(0);}
+void MainWindow::on_pushButton_HomeSG_clicked(){ui->stackedWidget->setCurrentIndex(0);}
 
 void MainWindow::connectButtons(const QString &tabName) {
 
@@ -471,7 +478,7 @@ void MainWindow::addRowToCurrentSchedule() {
 
 
 
-// Algo que probablemente no sea tan necesario cuando separe los ciclos de los cursos como objetos contenedores (porque será más fácil). Para el proyecto se propone como beta
+// Las siguientes 2 funciones seimplementarán más fácil cuando se separe los ciclos de los cursos como objetos contenedores. Para el proyecto se propone como beta. 
 void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int index) {
     QComboBox *combo = qobject_cast<QComboBox *>(sender());
     if (!combo) return;
@@ -903,5 +910,27 @@ void MainWindow::saveRowInCourses() {
                     << ", Sigla: " << QString::fromStdString(curso.sigla)
                     <<", Nombre: " << QString::fromStdString(curso.nombre)
                     << ", Departamento: " << QString::fromStdString(curso.departamento);
+    }
+}
+
+
+void MainWindow::on_pushButtonAddCSV_ScheduleGenerator_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open CSV"), "", tr("CSV Files (*.csv)"));
+
+    if (fileName.isEmpty())
+    {
+        return;
+    }
+    else
+    {
+        QFile file(fileName);
+
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+            return;
+        }
+        // CSV.
     }
 }
