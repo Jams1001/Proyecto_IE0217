@@ -3,7 +3,7 @@
  * @brief This file contains the declaration of the functional (implementation) classes and functions. 
  * @author Jorge Mora (jorgeadan.mora@ucr.ac.cr)
  * @version 0.1
- * @date 2023-06-25
+ * @date 2023-07-05
  */
 
 #ifndef FUN_H
@@ -18,7 +18,7 @@
  */
 class Curso {
 public:
-    std::string ciclo; /**< the cycle to which the course belongs. */
+    std::string ciclo; /**< The cycle to which the course belongs. */
     std::string sigla; /**< The course code. */
     std::string nombre; /**< The course name. */
     std::string departamento; /**< The department offering the course. */

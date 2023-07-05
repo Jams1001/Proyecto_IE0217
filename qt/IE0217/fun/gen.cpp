@@ -79,7 +79,7 @@ bool Cursog::esHorarioValido(const Horario& horario) const {
         }
     }
 
-    // Si llegamos hasta aquí, el horario es válido
+    // Si llegamos hasta aquí, el horario es válido... creo
     return true;
 }
 
@@ -137,12 +137,11 @@ void generarCSVsParaCursos(const QList<Cursog>& cursos) {
 
         // Bucle sobre todos los horarios posibles.
         for (const QList<Horario>& bloqueHorario : horarios) {
-            // Asume que todos los horarios en un bloque son válidos ya que ya hemos filtrado los bloques inválidos.
             combinacionesValidasPorCurso[curso.ciclo + "_" + curso.sigla_curso].append(bloqueHorario);
         }
     }
 
-    // Ahora, vamos a generar dos archivos CSV de salida.
+    // Genera los CSVs 
     for (int i = 0; i < 2; ++i) {
         // Abre el archivo CSV para escritura.
         QString rutaCarpeta = "./posibilidades/";
@@ -153,12 +152,12 @@ void generarCSVsParaCursos(const QList<Cursog>& cursos) {
 
         QTextStream out(&file);
 
-        // Escribe la cabecera del CSV.
+        // Header
         out << "Ciclo,Sigla,Grupo,Horario,Aula\n";
 
-        // Escribe los datos de las combinaciones válidas.
+        // Escribe los datos de las combinaciones válidas
         for (auto it = combinacionesValidasPorCurso.begin(); it != combinacionesValidasPorCurso.end(); ++it) {
-            // Para cada curso, escribe los detalles del curso y el horario.
+            // Para cada curso escribe los detalles del curso y el horario
             for (const Cursog& curso : cursos) {
                 if (it.key().split("_")[1] == curso.sigla_curso && i < it.value().size()) {
                     QString horarioString;
@@ -170,8 +169,6 @@ void generarCSVsParaCursos(const QList<Cursog>& cursos) {
                 }
             }
         }
-
-        // Cierra el archivo CSV.
         file.close();
     }
 }

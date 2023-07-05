@@ -3,7 +3,7 @@
  * @brief This file contains the declaration of the MainWindow class.
  * @author Jorge Mora (jorgeadan.mora@ucr.ac.cr)
  * @version 0.1
- * @date 2023-06-25
+ * @date 2023-07-05
  */
 
 #ifndef MAINWINDOW_H
@@ -39,11 +39,6 @@ public:
      */
     ~MainWindow();
 
-//public slots:
-//    // Haciendo magia - opción TEMPORAL para autocompletar y filtrar dropdowns
-//    void updateCourseOptionsOnCycleOrDepartmentChange(int index);
-//    void updateCourseOptionsOnSiglaOrNameChange(int index);
-
 protected:
     /**
      * @brief Filters events that occur in the watched object.
@@ -69,62 +64,190 @@ private:
     std::vector<Classroom> classrooms; /**< Vector to store the classrooms. */
     std::vector<Teacher> teachers; /**< Vector to store the teachers. */
     std::vector<Curso> cursos; /**< Vector to store the courses. */
-    std::vector<Fila> filas; /**< Vector to store the courses. */
+    std::vector<Fila> filas; /**< Vector to store the rows. */
 
 private slots:
-    // Slots for button clicks
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonSemesters_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonTeachers_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonExternalCourses_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonCycles_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonCourses_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonClassrooms_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonCurrentSchedule_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButtonScheduleGenerator_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeS_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeT_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeEC_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeCy_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeCo_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeCl_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeCu_clicked();
+    /**
+     * @brief Handle button clicks for tabs navegation.
+     */
     void on_pushButton_HomeSG_clicked();
 
-    // Other slots
+    /**
+     * @brief Connects buttons to their respective handlers based on the tab name.
+     *
+     * @param tabName A string representing the name of the tab where the buttons to be connected are located.
+     */
     void connectButtons(const QString &tabName);
+
+    /**
+     * @brief To hide buttons depending on the configuration
+     */
     void hideButtons();
+
+    /**
+     * @brief To add new button in a tab.
+     */
     void addNewButton();
+
+    /**
+     * @brief To enter selection mode.
+     */
     void enterSelectionMode();
+
+    /**
+     * @brief To exit selection mode.
+     */
     void exitSelectionMode();
+
+    /**
+     * @brief To remove buttons selected.
+     */
     void removeSelectedButtons();
+
+    /**
+     * @brief To duplicate buttons selected.
+     */
     void duplicateSelectedButtons();
+
+    /**
+     * @brief To edit buttons selected in selection mode
+     */
     void buttonClicked();
 
+    /**
+     * @brief Return the current layout.
+     * @return A pointer to the QVBoxLayout representing the current layout.
+     */
     QVBoxLayout* getCurrentLayout();
+    
+    /**
+     * @brief Return the name of the tab from the given layout.
+     * @param layout A pointer to the QVBoxLayout from which to get the tab name.
+     * @return The name of the tab as a QString.
+     */
     QString getTabNameFromLayout(QVBoxLayout *layout);
 
-    // Tab CurrentSchedule
+    /**
+     * @brief  To add new row in CurrentSchedul tab.
+     */
     void addRowToCurrentSchedule();
+
+    /**
+     * @brief To note that the row was edited in CurrentSchedul tab.
+     */
     void editTextInCurrentSchedule();
+
+    /**
+     * @brief To delete the row selected in CurrentSchedul tab.
+     */
     void deleteSelectedRowsInCurrentSchedule();
+
+    /**
+     * @brief To save the row edited in CurrentSchedul tab.
+     */
     void saveRowInCurrentSchedule();
 
-    // Tab Courses
-    void addRowToCourses();
+    /**
+     * @brief To edit a cell in cell in Current schedule tab.
+     */
     void editComboBoxTextInCurrentSchedule();
+
+    /**
+     * @brief To add new row in Courses tab.
+     */
+    void addRowToCourses();
+
+    /**
+     * @brief To note that the row was edited in Courses tab.
+     */
     void editTextInCourses();
+
+    /**
+     * @brief To delete the row selected in Courses tab.
+     */
     void deleteSelectedRowsInCourses();
+
+    /**
+     * @brief To save the row edited in Courses tab.
+     */
     void saveRowInCourses();
 
+    /**
+     * @brief Update course options in a cell on cycle or department change..
+     * @param index The index at which the change occurred.
+     */
     void updateCourseOptionsOnCycleOrDepartmentChange(int index);
+
+    /**
+     * @brief Update course options in a cell on sigla or name change.
+     * @param index The index at which the change occurred.
+     */
     void updateCourseOptionsOnSiglaOrNameChange(int index);
-    //void updateCourseOptionsOnCycleOrDepartmentChange(const QString &text);
-    //void updateCourseOptionsOnSiglaOrNameChange(const QString &text);
 
-
-    // Shcedule Generator
+    /**
+     * @brief Handle the addition of a CSV in the schedule generator.
+     */
     void on_pushButtonAddCSV_ScheduleGenerator_clicked();
-
 };
 
 #endif // MAINWINDOW_H
