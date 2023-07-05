@@ -1,3 +1,12 @@
+/**
+ * @file gen.h
+ * @brief This file contains... 
+ * @author Jorge Mora (jorgeadan.mora@ucr.ac.cr)
+ * @version 0.1
+ * @date 2023-07-95
+ */
+
+
 #ifndef GEN_H
 #define GEN_H
 

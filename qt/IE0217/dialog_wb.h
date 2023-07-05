@@ -1,3 +1,12 @@
+/**
+ * @file dialog.h
+ * @brief This file contains... 
+ * @author Jorge Mora (jorgeadan.mora@ucr.ac.cr)
+ * @version 0.1
+ * @date 2023-07-95
+ */
+
+
 #ifndef DIALOG_WB_H
 #define DIALOG_WB_H
 
