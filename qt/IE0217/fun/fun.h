@@ -101,6 +101,17 @@ public:
     std::string formatear() const {
         return dia + ": " + horaInicio + " a " + horaFinal;
     }
+
+    /**
+     * @brief Equality operator overload.
+     * @param other The other Horario object to compare to.
+     * @return True if the other Horario object is equal to this one, false otherwise.
+     */
+    bool operator==(const Horario& other) const {
+        return dia == other.dia 
+               && horaInicio == other.horaInicio 
+               && horaFinal == other.horaFinal;
+    }
 };
 
 

@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         dialog_wb.h
         fun/fun.cpp
         fun/fun.h
+        fun/gen.cpp
+        fun/gen.h
         My_Resources.qrc
 )
 

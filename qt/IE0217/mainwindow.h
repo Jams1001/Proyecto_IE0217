@@ -13,6 +13,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include "fun/fun.h"
+#include "fun/gen.h"
 #include <QPushButton>
 
 QT_BEGIN_NAMESPACE
@@ -117,6 +118,8 @@ private slots:
 
     void updateCourseOptionsOnCycleOrDepartmentChange(int index);
     void updateCourseOptionsOnSiglaOrNameChange(int index);
+    //void updateCourseOptionsOnCycleOrDepartmentChange(const QString &text);
+    //void updateCourseOptionsOnSiglaOrNameChange(const QString &text);
 
 
     // Shcedule Generator

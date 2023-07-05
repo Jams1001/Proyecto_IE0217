@@ -481,54 +481,64 @@ void MainWindow::addRowToCurrentSchedule() {
 // Las siguientes 2 funciones seimplementarán más fácil cuando se separe los ciclos de los cursos como objetos contenedores. Para el proyecto se propone como beta. 
 void MainWindow::updateCourseOptionsOnSiglaOrNameChange(int index) {
     QComboBox *combo = qobject_cast<QComboBox *>(sender());
-    if (!combo) return;
-
-    QString selectedText = combo->currentText();
-
-    if (selectedText.isEmpty()) return; // Si la selección es vacía, retorno
-
-    Curso selectedCourse("", "", "", "");
-    bool isFound = false;
-
-    for (const Curso& curso : cursos) {
-        if (curso.sigla == selectedText.toStdString() || curso.nombre == selectedText.toStdString()) {
-            selectedCourse = curso;
-            isFound = true;
-            break;
-        }
+    if (!combo) {
+        qDebug() << "Combo sender not found, returning";
+        return;
     }
 
-    if (!isFound) return; // Si no se encontró el curso, retorno también
+    if (index < 0 || index >= cursos.size()) {
+        qDebug() << "Invalid index, returning";
+        return;
+    }
 
-    // Get the row index of the combo box
-    int rowIndex = ui->scheduleTable_CurrentSchedule->indexAt(combo->pos()).row();
+    Curso selectedCourse = cursos[index];
+    qDebug() << "Selected course: " << QString::fromStdString(selectedCourse.sigla);
 
-    // Ahora actualizamos los combos en la fila especificada.
+    QPoint comboPos = combo->mapToParent(QPoint(0,0));
+    qDebug() << "Combo position: " << comboPos;
+
+    int rowIndex = ui->scheduleTable_CurrentSchedule->indexAt(comboPos).row();
+    qDebug() << "Row index: " << rowIndex;
+
+    if (rowIndex < 0) {
+        qDebug() << "Invalid row index, returning";
+        return;
+    }
+
     QComboBox *cicloCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 1));
     QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 2));
     QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 3));
     QComboBox *departamentoCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 11));
 
-    // Desconectamos las señales temporalmente para evitar un ciclo infinito de actualizaciones
-    disconnect(cicloCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
-    disconnect(departamentoCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
+    if (!cicloCombo || !siglaCombo || !nombreCombo || !departamentoCombo) {
+        qDebug() << "Could not find all combo boxes, returning";
+        return;
+    }
+
+    cicloCombo->blockSignals(true);
+    siglaCombo->blockSignals(true);
+    nombreCombo->blockSignals(true);
+    departamentoCombo->blockSignals(true);
 
     cicloCombo->setCurrentText(QString::fromStdString(selectedCourse.ciclo));
     siglaCombo->setCurrentText(QString::fromStdString(selectedCourse.sigla));
     nombreCombo->setCurrentText(QString::fromStdString(selectedCourse.nombre));
     departamentoCombo->setCurrentText(QString::fromStdString(selectedCourse.departamento));
 
-    // Reconectamos las señales
-    connect(cicloCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
-    connect(departamentoCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnCycleOrDepartmentChange(int)));
+    cicloCombo->blockSignals(false);
+    siglaCombo->blockSignals(false);
+    nombreCombo->blockSignals(false);
+    departamentoCombo->blockSignals(false);
 }
+
+
 
 
 void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int index) {
     QComboBox *combo = qobject_cast<QComboBox *>(sender());
     if (!combo) return;
 
-    QString selectedText = combo->currentText();
+    QString selectedText = combo->itemText(index);
 
     std::set<std::string> uniqueSiglas;
     std::set<std::string> uniqueNombres;
@@ -540,20 +550,21 @@ void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int index) {
         }
     }
 
-    // Get the row index of the combo box
     int rowIndex = ui->scheduleTable_CurrentSchedule->indexAt(combo->pos()).row();
+
+    if (rowIndex < 0) return;
 
     QComboBox *siglaCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 2));
     QComboBox *nombreCombo = qobject_cast<QComboBox *>(ui->scheduleTable_CurrentSchedule->cellWidget(rowIndex, 3));
 
-    // Desconectamos las señales temporalmente para evitar un ciclo infinito de actualizaciones.
-    disconnect(siglaCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
-    disconnect(nombreCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
+    if (!siglaCombo || !nombreCombo) return;
 
-    // Limpiamos y re-llenamos los combos de Sigla y Nombre.
+    siglaCombo->blockSignals(true);
+    nombreCombo->blockSignals(true);
+
     siglaCombo->clear();
     nombreCombo->clear();
-    
+
     for (const auto& sigla : uniqueSiglas) {
         siglaCombo->addItem(QString::fromStdString(sigla));
     }
@@ -562,12 +573,9 @@ void MainWindow::updateCourseOptionsOnCycleOrDepartmentChange(int index) {
         nombreCombo->addItem(QString::fromStdString(nombre));
     }
 
-    // Reconectamos las señales.
-    connect(siglaCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
-    connect(nombreCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCourseOptionsOnSiglaOrNameChange(int)));
+    siglaCombo->blockSignals(false);
+    nombreCombo->blockSignals(false);
 }
-
-
 
 
 
@@ -924,13 +932,13 @@ void MainWindow::on_pushButtonAddCSV_ScheduleGenerator_clicked()
     }
     else
     {
-        QFile file(fileName);
+        // Leer los cursos desde el archivo CSV.
+        QList<Cursog> cursos = leerCursosDesdeCSV(fileName);
 
-        if (!file.open(QIODevice::ReadOnly))
-        {
-            QMessageBox::information(this, tr("Unable to open file"), file.errorString());
-            return;
-        }
-        // CSV.
+        // Generar los CSV para los cursos.
+        generarCSVsParaCursos(cursos);
+
+        // Informar al usuario que la operación se ha completado.
+        QMessageBox::information(this, tr("Operation Completed"), tr("The operation has completed."));
     }
 }
